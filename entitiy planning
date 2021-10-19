@@ -1,0 +1,98 @@
+Entities: 
+
+-> Orders
+
+	-> OrderID (Primary Key)
+	
+	-> OrderBookID (Foreign Key)
+
+	-> Client (varchar)
+	
+	-> OrderDirection (BUY or SELL)
+	
+	-> Price
+	
+	-> No. of Shares
+	
+	-> Date/Time
+	
+	-> OrderStatus (half-filled/or fully filled)
+	
+	-> OrderType (Market/Limit)
+	
+	-> Limit price (Null)
+	
+-> OrderBook
+	
+	-> OrderBookID (Primary Key) 
+	
+	-> //List of orders for Java
+	
+	-> ExchangeID (Foreign Key) 
+	
+	-> SortID (Foreign Key) 
+	
+	-> CompanyName (varchar) 
+	
+	-> Total Amount of orders (int)
+	
+	
+-> Exchange 
+	
+	-> ExchangeID (Primary Key)
+	
+	-> ExchangeName (varchar)
+	
+	-> FeeLadder (Int)
+	
+	-> CurrentDaysTotalTradedValue (INT)
+	
+	-> SortID (Foreign Key)
+	
+
+
+-> Sort 
+
+	-> SortID (Primary Key) 
+	
+	-> SortName 
+	
+	-> SortType (maximum rebate/fill) //tbd add more types of sortType in the future.
+	
+	-> //List <Exchange> 
+	
+	-> //List <OrderBooks>
+	
+	-> //Execute Trade() String 
+	
+
+-> User 
+
+	-> UserID (Primary Key)
+	
+	-> UserName (varchar) 
+	
+	-> Email (varchar) (encrypted)
+	
+	-> Password (varchar) (encrypted)
+	
+	-> Balance (int) 
+	
+	-> //Iterate through orders by UserID, split by CompanyName, and add buy and subtract sell. 
+		Shares
+		
+-> Session 
+
+	-> Cookie/Session ID (Primary Key)
+	
+	-> UserID (Foreign Key)
+
+-> TradeHistory  
+
+	-> TradeID (Primary KEY) 
+	
+ 	-> OrderID SellOrderID (Foreign KEY) 
+
+	-> BuyOrderID (FOREIGN KEY)
+	
+	
