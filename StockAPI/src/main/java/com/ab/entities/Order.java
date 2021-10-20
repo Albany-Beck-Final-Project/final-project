@@ -53,7 +53,63 @@ public class Order {
 	@ManyToOne 
 	@JoinColumn(name = "order_book_id")
 	@Getter
-	private OrderBook orderBook; 
+	private OrderBook orderBook;
+
+	public Order(double price, int shares, LocalDateTime timeOfPurchase, OrderStatus orderStatus, OrderType orderType,
+			double limitPrice, User user, OrderBook orderBook) {
+		super();
+		this.price = price;
+		this.shares = shares;
+		this.timeOfPurchase = timeOfPurchase;
+		this.orderStatus = orderStatus;
+		this.orderType = orderType;
+		this.limitPrice = limitPrice;
+		this.user = user;
+		this.orderBook = orderBook;
+	} 
+	
+	
+	public Order() {}
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+	public int getShares() {
+		return shares;
+	}
+
+
+	public LocalDateTime getTimeOfPurchase() {
+		return timeOfPurchase;
+	}
+
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+
+	public OrderType getOrderType() {
+		return orderType;
+	}
+
+
+	public double getLimitPrice() {
+		return limitPrice;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public OrderBook getOrderBook() {
+		return orderBook;
+	}
 	
 	
 	

@@ -50,6 +50,61 @@ public class OrderBook {
 		cascade = CascadeType.ALL)
 	@Getter
 	private List<BuyOrder> buyOrders;
+
+
+	public OrderBook(int orderBookID, String companyName, int totalOrders, Exchange exchange,
+			List<SellOrder> sellOrders, List<BuyOrder> buyOrders) {
+		super();
+		this.orderBookID = orderBookID;
+		this.companyName = companyName;
+		this.totalOrders = totalOrders;
+		this.exchange = exchange;
+		this.sellOrders = sellOrders;
+		this.buyOrders = buyOrders;
+	}
+	
+	
+	
+	public OrderBook() {}
+
+
+
+	public int getOrderBookID() {
+		return orderBookID;
+	}
+
+
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+
+
+	public int getTotalOrders() {
+		return totalOrders;
+	}
+
+
+
+	public Exchange getExchange() {
+		return exchange;
+	}
+
+
+
+	public List<SellOrder> getSellOrders() {
+		return sellOrders;
+	}
+
+
+
+	public List<BuyOrder> getBuyOrders() {
+		return buyOrders;
+	}
+	
+	
+	
 	
 	
 	

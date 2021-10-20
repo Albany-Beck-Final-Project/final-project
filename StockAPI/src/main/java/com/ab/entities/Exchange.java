@@ -46,4 +46,47 @@ public class Exchange {
 	@Getter
 	private List<OrderBook> orderBooks;
 	
+	
+	public Exchange() {}
+
+
+	public Exchange(int exchangeID, String exchangeName, double feeLadder, int currentDaysTotalTradedValue,
+			List<OrderBook> orderBooks) {
+		super();
+		this.exchangeID = exchangeID;
+		this.exchangeName = exchangeName;
+		this.feeLadder = feeLadder;
+		this.currentDaysTotalTradedValue = currentDaysTotalTradedValue;
+		this.orderBooks = orderBooks;
+	}
+
+
+	public int getExchangeID() {
+		return exchangeID;
+	}
+
+
+	public String getExchangeName() {
+		return exchangeName;
+	}
+
+
+	public double getFeeLadder() {
+		return feeLadder;
+	}
+
+
+	public int getCurrentDaysTotalTradedValue() {
+		return currentDaysTotalTradedValue;
+	}
+
+
+	public List<OrderBook> getOrderBooks() {
+		return orderBooks;
+	}
+	
+	
+	
+	
+	
 }

@@ -34,4 +34,27 @@ public class TradeHistory {
 	@JoinColumn(name = "buy_order_id")
 	@Getter
 	private BuyOrder buyOrder;
+
+	public TradeHistory(int tradeID, SellOrder sellOrder, BuyOrder buyOrder) {
+		super();
+		this.tradeID = tradeID;
+		this.sellOrder = sellOrder;
+		this.buyOrder = buyOrder;
+	}
+	
+	public TradeHistory() {}
+
+	public int getTradeID() {
+		return tradeID;
+	}
+
+	public SellOrder getSellOrder() {
+		return sellOrder;
+	}
+
+	public BuyOrder getBuyOrder() {
+		return buyOrder;
+	}
+	
+	
 }
