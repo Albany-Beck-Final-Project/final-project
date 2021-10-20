@@ -34,7 +34,49 @@ public class User {
 	
 	@Getter
 	private double balance;
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+//	public User(int userID, String firstName, String lastName, String email, String password, double balance) {
+//		super();
+//		this.userID = userID;
+//		this.firstName = firstName;
+//		this.lastName = lastName;
+//		this.email = email;
+//		this.password = password;
+//		this.balance = balance;
+//	}
 	
+	public User(String firstName, String lastName, String email, String password, double balance) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.balance = balance;
+	}
 	
+	public User() {}
 
 }

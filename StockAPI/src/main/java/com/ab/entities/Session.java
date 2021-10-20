@@ -24,4 +24,27 @@ public class Session {
 	@JoinColumn(name = "user_id")
 	@Getter
 	private User user;
+
+	public Session(String sessionID, User user) {
+		super();
+		this.sessionID = sessionID;
+		this.user = user;
+	}
+	
+	
+	public Session() {}
+
+
+	public String getSessionID() {
+		return sessionID;
+	}
+
+
+	public User getUser() {
+		return user;
+	}
+	
+	
+	
+	
 }
