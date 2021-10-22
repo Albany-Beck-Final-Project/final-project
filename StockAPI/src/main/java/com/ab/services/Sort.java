@@ -2,13 +2,14 @@ package com.ab.services;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ab.entities.Exchange;
 import com.ab.entities.OrderBook;
 import com.ab.enums.SortType;
 
 
-
-
+@Service
 public class Sort {
 	
 	private int sortID;
@@ -16,6 +17,7 @@ public class Sort {
 	private SortType sortType;
 	private List<OrderBook> orderBooks;
 	private List<Exchange> exchanges;
+	
 	public Sort() {
 		super();
 	}

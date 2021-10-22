@@ -3,7 +3,8 @@ package com.ab.entities;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
-
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,10 +22,17 @@ public class Order {
 	
 	
 	private double price;
+	
 	private int shares;
+	
 	private LocalDateTime timeOfPurchase;
+	
+	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;	
+	
+	@Enumerated(EnumType.STRING)
 	private OrderType orderType;
+
 	private double limitPrice;
 	
 	

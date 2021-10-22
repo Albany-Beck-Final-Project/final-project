@@ -1,49 +1,46 @@
 package com.ab.dtos;
+import javax.security.auth.login.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-
-@NoArgsConstructor
-@AllArgsConstructor
 public class UserDto {
+	
+	//@NotEmpty
+	//@NotNull
+	private int userID;
+
+	private String firstName;
+	
+	
+	private String lastName;
+	
+	
+	private String email;
+	
+	
+	private String password;
+	private String matchingPassword;
 	
 	public UserDto() {}
 
-	public UserDto(int userID, String firstName, String lastName, String email, String password, double balance) {
+	public UserDto(int userID, String firstName, String lastName, String email, String password, String matchingPassword, double balance) {
 		super();
 		this.userID = userID;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.matchingPassword = matchingPassword;
 		this.balance = balance;
 	}
 	
-	public UserDto(String firstName, String lastName, String email, String password, double balance) {
+	public UserDto(String firstName, String lastName, String email, String password, String matchingPassword, double balance) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.matchingPassword = matchingPassword;
 		this.balance = balance;
 	}
 
-	@Getter
-	private int userID;
-	@Getter
-	private String firstName;
-	
-	@Getter
-	private String lastName;
-	
-	@Getter
-	private String email;
-	
-	@Getter
-	private String password;
-	
-	@Getter
 	private double balance;
 
 	public int getUserID() {
@@ -65,9 +62,19 @@ public class UserDto {
 	public String getPassword() {
 		return password;
 	}
-
+	
+	public String getMatchingPassword() {
+		return matchingPassword;
+	}
+	
 	public double getBalance() {
 		return balance;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDto [userID=" + userID + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", matchingPassword=" + matchingPassword + ", balance=" + balance + "]";
 	}
 	
 	

@@ -20,10 +20,11 @@ public class BuyOrderService {
 		return buyOrderRepository.findAll();
 	}
 	
-	
+	/**
 	public OrderStatus updateBuyOrderStatus(OrderStatus status, int id) { 
 		return buyOrderRepository.updateOrderStatusBuy(status, id);
 	}
+	**/
 	
 	public BuyOrder deleteBuyOrder(int id) {
 		BuyOrder orderToDelete = buyOrderRepository.getById(id) ;

@@ -15,12 +15,19 @@ import com.ab.enums.OrderStatus;
 public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 
 	//Basic methods are already included
-	
+	/**
 	@Transactional
 	@Modifying
-	@Query("UPDATE Buy_Order o SET o.order_status =:orderStatus WHERE o.buy_order_id =:id")
+	@Query("UPDATE buy_order")
 	public OrderStatus updateOrderStatusBuy(@Param("orderStatus")OrderStatus orderStatus, @Param("id")int id);
+	**/
+	/**
+	@Transactional
+	@Modifying
+    @Query("UPDATE Employee e SET e.employeeEmail =:email WHERE e.employeeId =:id")
+    public int updateEmployeeEmailByEmployeeId(@Param("email")String email, @Param("id")int id);
 	
+	**/
 	
 	
 }

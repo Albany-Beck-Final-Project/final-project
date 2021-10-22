@@ -15,16 +15,22 @@ public class SellOrderService  {
 	@Autowired
 	private SellOrderRepository sellOrderRepository;
 	
+	/**
 	public OrderStatus updateBuyOrderStatus(OrderStatus status, int id) { 
 		return sellOrderRepository.updateOrderStatusSell(status, id);
 	}
-
+**/
 	
 	public List<SellOrder> findAllOrders() {
 		// TODO Auto-generated method stub
 		return sellOrderRepository.findAll();
 	}
 	
+	public SellOrder deleteSellOrder(int id) { 
+		SellOrder orderToDelete = sellOrderRepository.getById(id);
+		sellOrderRepository.deleteById(id);
+		return orderToDelete;
+	}
 	
 	
 	
