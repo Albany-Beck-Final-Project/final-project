@@ -2,6 +2,8 @@ import React from 'react';
 import { navigate } from 'gatsby';
 
 import UserForm from '../components/UserForm';
+import Nav from "../components/Nav"
+import { logIn, main } from '../styles/login.module.css';
 
 
 const Login = () => {
@@ -11,7 +13,17 @@ const Login = () => {
 
 
   return (
-    <UserForm form="LOGIN" />
+    <div className={logIn}>
+
+      <Nav path="/login"/>
+
+      <div className={main}>
+
+        <UserForm form="LOGIN" />
+
+      </div>
+
+    </div>
   )
 }
 
