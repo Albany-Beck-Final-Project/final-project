@@ -24,6 +24,19 @@ export default (props) => {
           <Link to="/login" className={logInLink} >Log In</Link>
         </div>
       )
+    } else if (props.path === "/login") {
+      return (
+        <div className={noUserOptions}>
+          <Link to="/signup" className={signUpLink}>Sign Up</Link>
+        </div>
+      )
+    } else if (window.localStorage.StockPlatform) {
+      return (
+        <div className={noUserOptions}>
+          <button className={logOut} onClick={() => { }}>Log Out</button>
+          { /* add dropdown option for account etc. */ }
+        </div>
+      )
     }
   }
 

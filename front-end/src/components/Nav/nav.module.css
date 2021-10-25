@@ -29,7 +29,7 @@
   position: absolute;
 }
 
-.logInLink, .signUpLink {
+.logInLink, .signUpLink, .logOut {
   color: #5A6369;
 
   margin-top: 15px;
@@ -44,7 +44,12 @@
 
 }
 
-.signUpLink {
+.signUpLink, .logOut {
   float: right;
   margin-left: 40px;
+}
+
+.logOut {
+  border: none;
+  background: inherit;
 }
