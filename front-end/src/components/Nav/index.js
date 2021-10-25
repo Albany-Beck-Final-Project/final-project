@@ -6,10 +6,6 @@ import { navDiv, nav, noUserOptions, logInLink, signUpLink, logOut, dropdown, ac
 export default (props) => {
 
   const userOptionsRendering = () => {
-    // log in AND sign up
-    // log in
-    // sign up
-    // {account} AND log out
     if (props.path === "/" && !(window.localStorage.StockPlatform)) {
       return (
         <div className={noUserOptions}>
@@ -33,7 +29,6 @@ export default (props) => {
       return (
         <div className={noUserOptions}>
           <button className={logOut} onClick={() => { }}>Log Out</button>
-          { /* add dropdown option for account etc. */ }
           <div className={dropdown}>
             <button className={accountOptions} onClick={() => { console.log(document.getElementById('dropdownMenu')); document.getElementById('dropdownMenu').classList.toggle(active) }}>Account &#9660;</button>
             <div className={dropdownMenu} id="dropdownMenu">
