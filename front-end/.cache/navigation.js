@@ -1,40 +1,41 @@
 import React from "react"
 import PropTypes from "prop-types"
 import loader, { PageResourceStatus } from "./loader"
-import { maybeGetBrowserRedirect } from "./redirect-utils.js"
+import redirects from "./redirects.json"
 import { apiRunner } from "./api-runner-browser"
 import emitter from "./emitter"
 import { RouteAnnouncerProps } from "./route-announcer-props"
-import { navigate as reachNavigate } from "@gatsbyjs/reach-router"
-import { globalHistory } from "@gatsbyjs/reach-router/lib/history"
+import { navigate as reachNavigate } from "@reach/router"
+import { globalHistory } from "@reach/router/lib/history"
 import { parsePath } from "gatsby-link"
 
+// Convert to a map for faster lookup in maybeRedirect()
+const redirectMap = redirects.reduce((map, redirect) => {
+  map[redirect.fromPath] = redirect
+  return map
+}, {})
+
 function maybeRedirect(pathname) {
-  const redirect = maybeGetBrowserRedirect(pathname)
-  const { hash, search } = window.location
+  const redirect = redirectMap[pathname]
 
   if (redirect != null) {
-    window.___replace(redirect.toPath + search + hash)
+    if (process.env.NODE_ENV !== `production`) {
+      if (!loader.isPageNotFound(pathname)) {
+        console.error(
+          `The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`
+        )
+      }
+    }
+
+    window.___replace(redirect.toPath)
     return true
   } else {
     return false
   }
 }
 
-// Catch unhandled chunk loading errors and force a restart of the app.
-let nextRoute = ``
-
-window.addEventListener(`unhandledrejection`, event => {
-  if (/loading chunk \d* failed./i.test(event.reason)) {
-    if (nextRoute) {
-      window.location.pathname = nextRoute
-    }
-  }
-})
-
 const onPreRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
-    nextRoute = location.pathname
     apiRunner(`onPreRouteUpdate`, { location, prevLocation })
   }
 }
@@ -42,12 +43,6 @@ const onPreRouteUpdate = (location, prevLocation) => {
 const onRouteUpdate = (location, prevLocation) => {
   if (!maybeRedirect(location.pathname)) {
     apiRunner(`onRouteUpdate`, { location, prevLocation })
-    if (
-      process.env.GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND &&
-      process.env.GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR === `true`
-    ) {
-      emitter.emit(`onRouteUpdate`, { location, prevLocation })
-    }
   }
 }
 
@@ -60,19 +55,20 @@ const navigate = (to, options = {}) => {
     return
   }
 
-  const { pathname, search, hash } = parsePath(to)
-  const redirect = maybeGetBrowserRedirect(pathname)
+  let { pathname } = parsePath(to)
+  const redirect = redirectMap[pathname]
 
   // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
   if (redirect) {
-    to = redirect.toPath + search + hash
+    to = redirect.toPath
+    pathname = parsePath(to).pathname
   }
 
   // If we had a service worker update, no matter the path, reload window and
   // reset the pathname whitelist
   if (window.___swUpdated) {
-    window.location = pathname + search + hash
+    window.location = pathname
     return
   }
 
@@ -85,7 +81,7 @@ const navigate = (to, options = {}) => {
     })
   }, 1000)
 
-  loader.loadPage(pathname + search).then(pageResources => {
+  loader.loadPage(pathname).then(pageResources => {
     // If no page resources, then refresh the page
     // Do this, rather than simply `window.location.reload()`, so that
     // pressing the back/forward buttons work - otherwise when pressing
@@ -117,7 +113,7 @@ const navigate = (to, options = {}) => {
           })
         }
 
-        window.location = pathname + search + hash
+        window.location = pathname
       }
     }
     reachNavigate(to, options)
@@ -132,12 +128,7 @@ function shouldUpdateScroll(prevRouterProps, { location }) {
     // `pathname` for backwards compatibility
     pathname,
     routerProps: { location },
-    getSavedScrollPosition: args => [
-      0,
-      // FIXME this is actually a big code smell, we should fix this
-      // eslint-disable-next-line @babel/no-invalid-this
-      this._stateStorage.read(args, args.key),
-    ],
+    getSavedScrollPosition: args => this._stateStorage.read(args),
   })
   if (results.length > 0) {
     // Use the latest registered shouldUpdateScroll result, this allows users to override plugin's configuration
@@ -168,6 +159,9 @@ function init() {
   window.___push = to => navigate(to, { replace: false })
   window.___replace = to => navigate(to, { replace: true })
   window.___navigate = (to, options) => navigate(to, options)
+
+  // Check for initial page-load redirect
+  maybeRedirect(window.location.pathname)
 }
 
 class RouteAnnouncer extends React.Component {
@@ -201,18 +195,6 @@ class RouteAnnouncer extends React.Component {
   }
 }
 
-const compareLocationProps = (prevLocation, nextLocation) => {
-  if (prevLocation.href !== nextLocation.href) {
-    return true
-  }
-
-  if (prevLocation?.state?.key !== nextLocation?.state?.key) {
-    return true
-  }
-
-  return false
-}
-
 // Fire on(Pre)RouteUpdate APIs
 class RouteUpdates extends React.Component {
   constructor(props) {
@@ -225,15 +207,16 @@ class RouteUpdates extends React.Component {
   }
 
   shouldComponentUpdate(prevProps) {
-    if (compareLocationProps(prevProps.location, this.props.location)) {
+    if (this.props.location.href !== prevProps.location.href) {
       onPreRouteUpdate(this.props.location, prevProps.location)
       return true
     }
+
     return false
   }
 
   componentDidUpdate(prevProps) {
-    if (compareLocationProps(prevProps.location, this.props.location)) {
+    if (this.props.location.href !== prevProps.location.href) {
       onRouteUpdate(this.props.location, prevProps.location)
     }
   }
@@ -252,4 +235,4 @@ RouteUpdates.propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-export { init, shouldUpdateScroll, RouteUpdates, maybeGetBrowserRedirect }
+export { init, shouldUpdateScroll, RouteUpdates }

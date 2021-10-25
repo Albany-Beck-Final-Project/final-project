@@ -1,8 +1,9 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
 import React from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate, Location, BaseContext } from "@gatsbyjs/reach-router"
+import { Router, navigate, Location, BaseContext } from "@reach/router"
 import { ScrollContext } from "gatsby-react-router-scroll"
+import domReady from "@mikaelkristiansson/domready"
 import { StaticQueryContext } from "gatsby"
 import {
   shouldUpdateScroll,
@@ -25,7 +26,7 @@ import stripPrefix from "./strip-prefix"
 // Generated during bootstrap
 import matchPaths from "$virtual/match-paths.json"
 
-const loader = new ProdLoader(asyncRequires, matchPaths, window.pageData)
+const loader = new ProdLoader(asyncRequires, matchPaths)
 setLoader(loader)
 loader.setApiRunner(apiRunner)
 
@@ -38,7 +39,7 @@ navigationInit()
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
-  if (apiRunner(`registerServiceWorker`).filter(Boolean).length > 0) {
+  if (apiRunner(`registerServiceWorker`).length > 0) {
     require(`./register-service-worker`)
   }
 
@@ -104,14 +105,11 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 >
                   <RouteHandler
                     path={
-                      pageResources.page.path === `/404.html` ||
-                      pageResources.page.path === `/500.html`
+                      pageResources.page.path === `/404.html`
                         ? stripPrefix(location.pathname, __BASE_PATH__)
                         : encodeURI(
-                            (
-                              pageResources.page.matchPath ||
+                            pageResources.page.matchPath ||
                               pageResources.page.path
-                            ).split(`?`)[0]
                           )
                     }
                     {...this.props}
@@ -131,41 +129,32 @@ apiRunnerAsync(`onClientEntry`).then(() => {
   const { pagePath, location: browserLoc } = window
 
   // Explicitly call navigate if the canonical path (window.pagePath)
-  // is different to the browser path (window.location.pathname). SSR
-  // page paths might include search params, while SSG and DSG won't.
-  // If page path include search params we also compare query params.
-  // But only if NONE of the following conditions hold:
+  // is different to the browser path (window.location.pathname). But
+  // only if NONE of the following conditions hold:
   //
   // - The url matches a client side route (page.matchPath)
   // - it's a 404 page
   // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
   if (
     pagePath &&
-    __BASE_PATH__ + pagePath !==
-      browserLoc.pathname + (pagePath.includes(`?`) ? browserLoc.search : ``) &&
+    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
     !(
       loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
-      pagePath.match(/^\/(404|500)(\/?|.html)$/) ||
+      pagePath === `/404.html` ||
+      pagePath.match(/^\/404\/?$/) ||
       pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
     )
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.hash, {
+    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
       replace: true,
     })
   }
 
-  publicLoader.loadPage(browserLoc.pathname + browserLoc.search).then(page => {
+  publicLoader.loadPage(browserLoc.pathname).then(page => {
     if (!page || page.status === PageResourceStatus.Error) {
-      const message = `page resources for ${browserLoc.pathname} not found. Not rendering React`
-
-      // if the chunk throws an error we want to capture the real error
-      // This should help with https://github.com/gatsbyjs/gatsby/issues/19618
-      if (page && page.error) {
-        console.error(message)
-        throw page.error
-      }
-
-      throw new Error(message)
+      throw new Error(
+        `page resources for ${browserLoc.pathname} not found. Not rendering React`
+      )
     }
 
     window.___webpackCompilationHash = page.page.webpackCompilationHash
@@ -179,62 +168,24 @@ apiRunnerAsync(`onClientEntry`).then(() => {
       }
     ).pop()
 
-    const App = function App() {
-      const onClientEntryRanRef = React.useRef(false)
-
-      React.useEffect(() => {
-        if (!onClientEntryRanRef.current) {
-          onClientEntryRanRef.current = true
-          if (performance.mark) {
-            performance.mark(`onInitialClientRender`)
-          }
-
-          apiRunner(`onInitialClientRender`)
-        }
-      }, [])
-
-      return <GatsbyRoot>{SiteRoot}</GatsbyRoot>
-    }
+    const App = () => <GatsbyRoot>{SiteRoot}</GatsbyRoot>
 
     const renderer = apiRunner(
       `replaceHydrateFunction`,
       undefined,
-      ReactDOM.hydrateRoot ? ReactDOM.hydrateRoot : ReactDOM.hydrate
+      ReactDOM.hydrate
     )[0]
 
-    function runRender() {
-      const rootElement =
+    domReady(() => {
+      renderer(
+        <App />,
         typeof window !== `undefined`
           ? document.getElementById(`___gatsby`)
-          : null
-
-      if (renderer === ReactDOM.hydrateRoot) {
-        renderer(rootElement, <App />)
-      } else {
-        renderer(<App />, rootElement)
-      }
-    }
-
-    // https://github.com/madrobby/zepto/blob/b5ed8d607f67724788ec9ff492be297f64d47dfc/src/zepto.js#L439-L450
-    // TODO remove IE 10 support
-    const doc = document
-    if (
-      doc.readyState === `complete` ||
-      (doc.readyState !== `loading` && !doc.documentElement.doScroll)
-    ) {
-      setTimeout(function () {
-        runRender()
-      }, 0)
-    } else {
-      const handler = function () {
-        doc.removeEventListener(`DOMContentLoaded`, handler, false)
-        window.removeEventListener(`load`, handler, false)
-
-        runRender()
-      }
-
-      doc.addEventListener(`DOMContentLoaded`, handler, false)
-      window.addEventListener(`load`, handler, false)
-    }
+          : void 0,
+        () => {
+          apiRunner(`onInitialClientRender`)
+        }
+      )
+    })
   })
 })

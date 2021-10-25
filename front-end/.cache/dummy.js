@@ -1,2 +1,3 @@
 // Dummy file to work around a webpack hot reloading bug.
-export const a = 1
+// eslint-disable-next-line
+const a = 1
