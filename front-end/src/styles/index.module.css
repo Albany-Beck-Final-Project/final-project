@@ -81,8 +81,8 @@
   padding: 0;
 }
 
-.orderTitle {
-  width: calc(100% - 2px);
+.orderTitle, .stockTitle {
+  width: 100%;
   height: 40px;
 
   display: flex;
@@ -99,12 +99,12 @@
   display: flex;
 }
 
-.orderTitle > div {
+.orderTitle > div, .stockTitle > div {
   padding-left: 0 !important;
 }
 
 
-.orderId, .orderDate, .orderStock, .orderShares, .orderPrice, .orderStatus,
+.orderId, .orderDate, .orderStock, .orderShares, .orderPrice, .orderStatus, .orderDirection,
 .stockName, .stockPrice, .stockShares {
   align-self: center;
 
@@ -113,22 +113,26 @@
 }
 
 .orderId {
-  flex-basis: 15%;
+  flex-basis: 10%;
 }
 .orderDate {
   flex-basis: 20%;
 }
 .orderStock {
-  flex-basis: 15%;
+  flex-basis: 12.5%;
 }
 .orderShares {
-  flex-basis: 15%;
+  flex-basis: 12.5%;
 }
 .orderPrice {
   flex-basis: 15%;
 }
 .orderStatus {
-  flex-basis: 20%;
+  flex-basis: 15%;
+}
+
+.orderDirection {
+  flex-basis: 15%;
 }
 
 .eachStockMain {

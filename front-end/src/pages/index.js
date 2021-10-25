@@ -5,8 +5,8 @@ import "../styles/global.css";
 import Nav from '../components/Nav';
 import {
   main, photoDiv, about, portfolio, orders, eachOrderMain, orderTitle, eachStockMain,
-  orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus,
-  stockName, stockShares, stockPrice
+  orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus, orderDirection,
+  stockName, stockShares, stockPrice, stockTitle
 } from '../styles/index.module.css';
 export default function Home() {
   if (window.localStorage.StockPlatform) {
@@ -25,6 +25,7 @@ export default function Home() {
             <div className={orderShares}>4</div>
             <div className={orderPrice}>£592.48</div>
             <div className={orderStatus}>FILLED</div>
+            <div className={orderDirection}>SELL</div>
         </div>
       </li>
     )
@@ -34,14 +35,9 @@ export default function Home() {
     return (
       <li>
         <div className={eachStockMain}>
-          { /*
-            // Stock
-            // No Shares.
-            // Price per stock
-            */ }
-            <div className={stockName}>AAPL</div>
-            <div className={stockShares}>504</div>
-            <div className={stockPrice}>$148.10</div>
+          <div className={stockName}>AAPL</div>
+          <div className={stockShares}>500</div>
+          <div className={stockPrice}>$148.10</div>
         </div>
       </li>
     )
@@ -56,6 +52,13 @@ export default function Home() {
           <div className={portfolio}>
             <h2>Your Portfolio</h2>
             <ul>
+              <li>
+                <div className={stockTitle}>
+                    <div className={stockName}><u>Stock</u></div>
+                    <div className={stockShares}><u>No.Shares</u></div>
+                    <div className={stockPrice}><u>Price</u></div>
+                </div>
+              </li>
               { renderPortfolio() }
             </ul>
           </div>
@@ -70,6 +73,7 @@ export default function Home() {
                   <div className={orderShares}><u>Shares</u></div>
                   <div className={orderPrice}><u>Price</u></div>
                   <div className={orderStatus}><u>Status</u></div>
+                  <div className={orderDirection}><u>Direction</u></div>
                 </div>
               </li>
               <li>
@@ -80,6 +84,7 @@ export default function Home() {
                     <div className={orderShares}>4</div>
                     <div className={orderPrice}>£592.48</div>
                     <div className={orderStatus}>FILLED</div>
+                    <div className={orderDirection}>BUY</div>
                 </div>
               </li>
               { renderOrders() }
