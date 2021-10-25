@@ -25,7 +25,7 @@ export default (props) => {
           <Link to="/signup" className={signUpLink}>Sign Up</Link>
         </div>
       )
-    } else if (window.localStorage.StockPlatform) {
+    } else if (props.path === "/" && window.localStorage.StockPlatform) {
       return (
         <div className={userOptions}>
           <button className={logOut} onClick={() => { }}>Log Out</button>
