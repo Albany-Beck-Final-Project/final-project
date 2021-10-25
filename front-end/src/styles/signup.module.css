@@ -1,0 +1,11 @@
+.signUp {
+  background-color: inherit;
+}
+
+.main {
+  width: 100%;
+  height: calc(100vh - 100px);
+
+  top: 100px;
+  position: fixed;
+}
