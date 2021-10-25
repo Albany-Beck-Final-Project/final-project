@@ -4,8 +4,9 @@ import "../styles/global.css";
 
 import Nav from '../components/Nav';
 import {
-  main, photoDiv, about, portfolio, orders, eachOrderMain, orderTitle,
-  orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus
+  main, photoDiv, about, portfolio, orders, eachOrderMain, orderTitle, eachStockMain,
+  orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus,
+  stockName, stockShares, stockPrice
 } from '../styles/index.module.css';
 export default function Home() {
   if (window.localStorage.StockPlatform) {
@@ -29,6 +30,23 @@ export default function Home() {
     )
   }
 
+  const renderPortfolio = () => {
+    return (
+      <li>
+        <div className={eachStockMain}>
+          { /*
+            // Stock
+            // No Shares.
+            // Price per stock
+            */ }
+            <div className={stockName}>AAPL</div>
+            <div className={stockShares}>504</div>
+            <div className={stockPrice}>$148.10</div>
+        </div>
+      </li>
+    )
+  }
+
   if (window.localStorage.StockPlatform) {
     return (
       <div>
@@ -37,6 +55,9 @@ export default function Home() {
         <div className={main}>
           <div className={portfolio}>
             <h2>Your Portfolio</h2>
+            <ul>
+              { renderPortfolio() }
+            </ul>
           </div>
           <div className={orders}>
             <h2>Your Orders</h2>
