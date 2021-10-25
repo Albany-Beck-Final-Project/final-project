@@ -29,7 +29,7 @@
   position: absolute;
 }
 
-.logInLink, .signUpLink, .logOut {
+.logInLink, .signUpLink, .logOut, .accountOptions {
   color: #5A6369;
 
   margin-top: 15px;
@@ -49,7 +49,64 @@
   margin-left: 40px;
 }
 
-.logOut {
+.logOut, .accountOptions {
   border: none;
   background: inherit;
+}
+
+.logOut:hover, .accountOptions:hover {
+  cursor: pointer;
+}
+
+.dropdown {
+  float:right;
+  position: relative;
+}
+
+.accountOptions {
+
+}
+
+.dropdownMenu {
+  background-color: #333345;
+
+  padding: 7px 15px;
+
+
+  position: absolute;
+
+  left: 0;
+  top: calc(100% + 10px);
+
+  pointer-events: none;
+  transition: 150ms ease-in-out;
+  opacity: 0;
+  transform: translateY(-30%);
+}
+
+.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menuItems {
+  width: 100%;
+  white-space: nowrap;
+
+  border-bottom: 1px solid #5A6369;
+
+  padding: 8px 0;
+}
+
+.itemLinks {
+  font-size: 20px;
+  color: #5A6369;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#lastItem {
+  padding-bottom: none;
+  border: none;
 }

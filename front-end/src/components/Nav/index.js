@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 
-import { navDiv, nav, noUserOptions, logInLink, signUpLink } from './nav.module.css';
+import { navDiv, nav, noUserOptions, logInLink, signUpLink, logOut, dropdown, accountOptions, dropdownMenu, menuItems, itemLinks, lastItem, active } from './nav.module.css';
 
 export default (props) => {
 
@@ -11,7 +11,6 @@ export default (props) => {
     // sign up
     // {account} AND log out
     if (props.path === "/" && !(window.localStorage.StockPlatform)) {
-      // DISPLAY log in AND log out
       return (
         <div className={noUserOptions}>
           <Link to="/signup" className={signUpLink}>Sign Up</Link>
@@ -35,6 +34,14 @@ export default (props) => {
         <div className={noUserOptions}>
           <button className={logOut} onClick={() => { }}>Log Out</button>
           { /* add dropdown option for account etc. */ }
+          <div className={dropdown}>
+            <button className={accountOptions} onClick={() => { console.log(document.getElementById('dropdownMenu')); document.getElementById('dropdownMenu').classList.toggle(active) }}>Account &#9660;</button>
+            <div className={dropdownMenu} id="dropdownMenu">
+              <div className={menuItems}><Link to="" className={itemLinks}>Your Account</Link></div>
+              <div className={menuItems}><Link to="" className={itemLinks}>Deposit</Link></div>
+              <div className={menuItems} id={lastItem}><Link to="" className={itemLinks}>Withdraw</Link></div>
+            </div>
+          </div>
         </div>
       )
     }
@@ -45,6 +52,7 @@ export default (props) => {
       <div className={nav}>
 
           { userOptionsRendering() }
+
         </div>
     </div>
   )
