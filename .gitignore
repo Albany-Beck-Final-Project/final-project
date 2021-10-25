@@ -2,3 +2,5 @@
 */application.properties
 
 */node_modules
+
+front-end/.cache/*
