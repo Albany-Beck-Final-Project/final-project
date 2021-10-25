@@ -2,10 +2,12 @@
   background-color: #191924;
   width: 50%;
 
-  margin-left: 25%;
+  margin: 100px 25%;
   padding: 20px 0;
 
   box-sizing: border-box;
+
+  position: relative;
 }
 
 .formTitle {
@@ -45,20 +47,26 @@
 
 .submit {
   width: 30%;
-  height: 30px;
+
+  font-size: 32px;
+  line-height: 1;
 
   margin-top: 50px;
   margin-left: 35%;
   margin-bottom: 30px;
+  padding: 1px 0;
 
   background-color: #262633;
-  border: 1px solid #ED6402;
+  border: none;
+  border-bottom: 1px solid #ED6402;
   color: #ED6402;
+  transition: 0.3s;
 }
 
 .submit:hover {
   cursor: pointer;
   background-color: #333345;
+  border: 1px solid #ED6402;
 }
 
 .submit:focus {
