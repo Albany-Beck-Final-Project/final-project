@@ -1,0 +1,33 @@
+.main {
+  width: 100%;
+  height: calc(100% - 100px);
+
+  top: 100px;
+  position: relative;
+}
+
+.photoDiv {
+  width: 80vw;
+  height: 30vw;
+
+  margin-left: 10vw;
+  margin-top: 2.5vw;
+
+  background-color: #FF9900;
+
+  /* position: absolute; */
+}
+
+.about {
+
+  padding: 10px 30px;
+  color: #5A6369;
+}
+
+.about > h1 {
+  font-size: 36px;
+}
+
+.about > p {
+  font-size: 20px;
+}
