@@ -11,7 +11,6 @@
 }
 
 .formTitle {
-  /* color: #4E5559; */
   color: #5A6369;
   text-align: center;
 }
@@ -23,13 +22,11 @@
 
 .input {
   width: 75%;
-  /* height: 34px; */
 
   font-size: 32px;
   line-height: 1;
 
-  margin-left: 12.5%;
-  margin-top: 40px;
+  margin: 40px 12.5% 0px 12.5%;
   padding: 1px 0;
 
   color: #5A6369;
@@ -51,9 +48,7 @@
   font-size: 32px;
   line-height: 1;
 
-  margin-top: 50px;
-  margin-left: 35%;
-  margin-bottom: 30px;
+  margin: 50px 35% 30px 35%;
   padding: 1px 0;
 
   background-color: #262633;
