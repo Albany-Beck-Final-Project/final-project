@@ -3,16 +3,68 @@ import React from "react";
 import "../styles/global.css";
 
 import Nav from '../components/Nav';
-import { main, photoDiv, about } from '../styles/index.module.css';
-
+import {
+  main, photoDiv, about, portfolio, orders, eachOrderMain, orderTitle,
+  orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus
+} from '../styles/index.module.css';
 export default function Home() {
+  if (window.localStorage.StockPlatform) {
+    // USESTATE
+  }
 
 
+  const renderOrders = () => {
+    // ITERATE
+    return (
+      <li>
+        <div className={eachOrderMain}>
+            <div className={orderId}>1014</div>
+            <div className={orderDate}>24 OCT 2021</div>
+            <div className={orderStock}>AAPL</div>
+            <div className={orderShares}>4</div>
+            <div className={orderPrice}>£592.48</div>
+            <div className={orderStatus}>FILLED</div>
+        </div>
+      </li>
+    )
+  }
 
   if (window.localStorage.StockPlatform) {
     return (
       <div>
         <Nav path="/"/>
+
+        <div className={main}>
+          <div className={portfolio}>
+            <h2>Your Portfolio</h2>
+          </div>
+          <div className={orders}>
+            <h2>Your Orders</h2>
+            <ul>
+              <li>
+                <div className={orderTitle}>
+                  <div className={orderId}><u>Id</u></div>
+                  <div className={orderDate}><u>Date</u></div>
+                  <div className={orderStock}><u>Stock</u></div>
+                  <div className={orderShares}><u>Shares</u></div>
+                  <div className={orderPrice}><u>Price</u></div>
+                  <div className={orderStatus}><u>Status</u></div>
+                </div>
+              </li>
+              <li>
+                <div className={eachOrderMain}>
+                    <div className={orderId}>1013</div>
+                    <div className={orderDate}>14 OCT 2021</div>
+                    <div className={orderStock}>AAPL</div>
+                    <div className={orderShares}>4</div>
+                    <div className={orderPrice}>£592.48</div>
+                    <div className={orderStatus}>FILLED</div>
+                </div>
+              </li>
+              { renderOrders() }
+            </ul>
+          </div>
+        </div>
       </div>
     )
   } else {
@@ -22,6 +74,7 @@ export default function Home() {
 
         <div className={main}>
           <div className={photoDiv}></div>
+          <hr />
 
           <div className={about}>
             <h1>Stock Exchange</h1>
