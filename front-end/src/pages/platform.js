@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, navigate } from 'gatsby';
 
-import { platform, home, homeLink, exchange, exchangeOption, buyOption, sellOption, buyMain, sellMain, historyMain } from '../styles/platform.module.css';
+import { platform, home, homeLink, exchange, exchangeOption, buyOptionButton, sellOptionButton, buyMain, sellMain, historyMain } from '../styles/platform.module.css';
 
 import Orders from '../components/Orders';
 
@@ -25,9 +25,9 @@ const Platform = () => {
       <div className={exchange}>
         <div className={exchangeOption}>
 
-          <button className={buyOption}>BUY</button>
+          <button className={buyOptionButton}>BUY</button>
             { renderExchanges() }
-          <button className={sellOption}>SELL</button>
+          <button className={sellOptionButton}>SELL</button>
 
         </div>
 

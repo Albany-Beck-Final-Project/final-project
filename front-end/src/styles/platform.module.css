@@ -57,17 +57,17 @@
   border-right: 1px solid #748087;
 }
 
-.buyOption, .sellOption {
+.buyOptionButton, .sellOptionButton {
   font-size: 32px;
   font-weight: bold;
   color: #FFFFFF;
 }
 
-.buyOption {
+.buyOptionButton {
   background-color: #00FF00;
 }
 
-.sellOption {
+.sellOptionButton {
   background-color: #FF0000;
   border: none !important;
 }

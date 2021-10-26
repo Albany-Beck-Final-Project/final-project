@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { eachBuyOrder, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus, orderDirection } from './orders.module.css'
+import { eachBuyOrder, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus, orderDirection, buyMain, headers } from './buyOrders.module.css'
 import { SellService, BuyService } from '../../services';
 
 
-const Orders = ({ className, direction }) => {
+const BuyOrders = ({ direction }) => {
 
   const renderOrders = () => {
     let rendering = [];
-    let orders = direction === "BUY" ? BuyService.getOrders() : SellService.getOrders();
+    let orders = BuyService.getOrders();
 
     orders.forEach((order) => {
       rendering.push(
@@ -17,7 +17,8 @@ const Orders = ({ className, direction }) => {
             <div className={orderDirection} style={{ color: direction === "BUY" ? "#18C412" : "#FF0000" }}><strong>{order.direction}</strong></div>
             <div className={orderStock}>{order.stock}</div>
             <div className={orderShares}>{order.shares}</div>
-            <div className={orderPrice}>£{order.price}</div>
+            <div className={orderPrice}>£{order.totalPrice}</div>
+            <div className={orderStatus}>{order.status}</div>
 
           </div>
         </li>
@@ -26,28 +27,28 @@ const Orders = ({ className, direction }) => {
     return rendering;
   }
 
-  const renderOrderHeaders = () => {
+  const renderHeaders = () => {
     return (
       <li>
-        <div className={eachBuyOrder} style={{ marginBottom: 10, fontStyle: "italic" }}>
+        <div className={eachBuyOrder} style={{ borderWidth: 0, marginBottom: 20, fontStyle: "italic" }}>
           <div className={orderDirection}>Direction</div>
-          <div className={orderStock}>Stock</div>
-          <div className={orderShares}>Shares</div>
+          <div className={orderStock}>Symbol</div>
+          <div className={orderShares}>Quantity</div>
           <div className={orderPrice}>£/share</div>
-
+          <div className={orderStatus}>Status</div>
         </div>
       </li>
     )
   }
 
   return (
-    <div className={className}>
+    <div className={buyMain}>
     {/* BUY LOW */}
       <ul>
-        { renderOrderHeaders() }
+        { renderHeaders() }
         { renderOrders() }
       </ul>
     </div>
   )
 }
-export default Orders;
+export default BuyOrders;

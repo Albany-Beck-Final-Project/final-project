@@ -16,7 +16,7 @@ function getOrders() {
       date: "14 OCT 2021",
       stock: "AAPL",
       shares: 4,
-      totalPrice: 598.89,
+      price: 192.84,
       status: "FILLED",
       direction: "SELL"
     }
