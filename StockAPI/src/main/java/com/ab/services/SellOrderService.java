@@ -21,7 +21,7 @@ public class SellOrderService  {
 	}
 **/
 	
-	public List<SellOrder> findAllOrders() {
+	public List<SellOrder> getAllSellOrders() {
 		// TODO Auto-generated method stub
 		return sellOrderRepository.findAll();
 	}

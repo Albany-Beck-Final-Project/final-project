@@ -10,5 +10,4 @@ public interface OrderBookRepository extends JpaRepository<OrderBook,Integer> {
 	
 	//Implemented methods for basic commands 
 	
-	
 }

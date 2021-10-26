@@ -11,10 +11,11 @@ import com.ab.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-
-//	REGISTER
+ 
 	/**
+//	REGISTER
+	
 	@Query(value="SELECT e from User e WHERE e.email LIKE %:eName%, e.passowrd LIKE %password%",nativeQuery=true)
 	public List<User> findLoginDetails(@Param("eName")String name, @Param("password") String password);
-	**/
+**/
 }

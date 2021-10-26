@@ -44,6 +44,8 @@ public class UserService {
 	 * 
 	 * 
 	 */
+	
+	
 	public void register(String firstName, String lastName, String email, String password, double balance) { 
 		
 		User user = new User(firstName, lastName, email, password, 0);
