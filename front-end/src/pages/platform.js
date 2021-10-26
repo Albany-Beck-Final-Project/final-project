@@ -1,17 +1,14 @@
 import React from 'react';
 import { Link, navigate } from 'gatsby';
 
-import { platform, home, homeLink, exchange, exchangeOption, buyOption, sellOption, sellMain, historyMain } from '../styles/platform.module.css';
+import { platform, home, homeLink, exchange, exchangeOption, buyOption, sellOption, buyMain, sellMain, historyMain } from '../styles/platform.module.css';
 
-import BuyOrders from '../components/BuyOrders';
-import SellOrders from '../components/SellOrders';
+import Orders from '../components/Orders';
 
 const Platform = () => {
   // if(!(window.localStorage.StockPlatform)) {
   //   navigate("/login");
   // }
-
-
 
 
 
@@ -34,9 +31,9 @@ const Platform = () => {
 
         </div>
 
-        <BuyOrders />
+        <Orders className={buyMain} direction="BUY" />
 
-        <SellOrders />
+        <Orders className={sellMain} direction="SELL" />
 
       </div>
       <div className={historyMain}></div>
