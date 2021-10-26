@@ -45,6 +45,31 @@
   height: 10%;
   left: 0;
   border-bottom: 1px solid #ED6402;
+
+  display: flex;
+}
+
+.exchangeOption > button {
+  width: 100%;
+  flex-grow: 1;
+  outline: none;
+  border: none;
+  border-right: 1px solid #748087;
+}
+
+.buyOption, .sellOption {
+  font-size: 32px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.buyOption {
+  background-color: #00FF00;
+}
+
+.sellOption {
+  background-color: #FF0000;
+  border: none !important;
 }
 
 .buyMain, .sellMain {
