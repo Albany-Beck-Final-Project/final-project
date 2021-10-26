@@ -10,25 +10,16 @@
   color: #748087;
 }
 
-.orderId {
-  flex-basis: 10%;
-}
-.orderDate {
-  flex-basis: 20%;
-}
+
 .orderStock {
-  flex-basis: 12.5%;
+  flex-basis: 20%;
 }
 .orderShares {
   flex-basis: 12.5%;
 }
 .orderPrice {
-  flex-basis: 15%;
+  flex-basis: 20%;
 }
-.orderStatus {
-  flex-basis: 15%;
-}
-
 .orderDirection {
   flex-basis: 15%;
 }
