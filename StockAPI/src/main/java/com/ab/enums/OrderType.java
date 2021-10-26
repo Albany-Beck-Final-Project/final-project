@@ -2,5 +2,9 @@ package com.ab.enums;
 
 public enum OrderType {
 	MARKET,
-	LIMIT
+	LIMIT,
+	ONOPEN,
+	ONCLOSE,
+	HIDDENLIMIT,
+	MINEXECUTESIZE,
 }

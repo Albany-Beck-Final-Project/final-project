@@ -24,7 +24,9 @@ public class UserService {
 	 * @param newUser DTO of User's information
 	 * @return true if user saved to database. false if user not saved to database
 	 */
-	public boolean register(UserDto newUser) {
+	
+	/**
+	 * public boolean register(UserDto newUser) {
 		
 //		Return true if user saved
 		User user = new User(
@@ -36,4 +38,26 @@ public class UserService {
 				);
 		return userRepo.save(user) != null;
 	}
+	**/
+	
+	/***
+	 * 
+	 * 
+	 */
+	
+	
+	public void register(String firstName, String lastName, String email, String password, double balance) { 
+		
+		User user = new User(firstName, lastName, email, password, 0);
+		
+		userRepo.save(user);
+	}
+	
+	/**
+	public void login(String email, String password) { 
+		
+		userRepo.findLoginDetails(email, password);
+		
+	}
+	**/
 }
