@@ -88,7 +88,7 @@
 
 
 
-/* .orderId {
+.orderId {
   flex-basis: 10%;
 }
 .orderDate {
@@ -108,4 +108,4 @@
 }
 .orderDirection {
   flex-basis: 15%;
-} */
+}

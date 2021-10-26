@@ -3,10 +3,10 @@ import React from "react";
 import "../styles/global.css";
 
 import Nav from '../components/Nav';
-import { main, photoDiv, about, portfolio, orders } from '../styles/index.module.css';
+import { main, photoDiv, about, portfolio, orders, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus,
+  orderDirection } from '../styles/index.module.css';
 
-import { eachOrderMain, orderTitle, eachStockMain, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus,
-  orderDirection, stockName, stockShares, stockPrice, stockTitle } from '../styles/order.module.css'
+import { eachOrderMain, orderTitle, eachStockMain, stockName, stockShares, stockPrice, stockTitle } from '../styles/order.module.css'
 
 
 
