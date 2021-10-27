@@ -25,9 +25,9 @@ const Platform = () => {
       <div className={exchange}>
         <div className={exchangeOption}>
 
-          <button className={buyOptionButton}>BUY</button>
+          <button className={buyOptionButton} onClick={() => { navigate("/platform/buy") }}>BUY</button>
             { renderExchanges() }
-          <button className={sellOptionButton}>SELL</button>
+          <button className={sellOptionButton} onClick={() => { navigate("/platform/sell") }}>SELL</button>
 
         </div>
 
