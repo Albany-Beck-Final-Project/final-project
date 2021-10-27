@@ -26,7 +26,7 @@ export default () => {
   return (
     <div className={platform}>
       <div className={home}>
-        <Link to="/" className={homeLink}>Home</Link>
+        <Link to="/platform" className={homeLink}>Back</Link>
       </div>
 
       <div className={exchange}>
@@ -50,7 +50,7 @@ export default () => {
           <input type="submit" onSubmit={(e) => { e.preventdefault() }} value="BUY" className={buySubmit}/>
         </div>
 
-        <BuyOrders direction="BUY" />
+        <BuyOrders />
 
 
       </div>
