@@ -1,10 +1,13 @@
 package com.ab.services;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ab.dtos.UserDto;
 import com.ab.entities.User;
+import com.ab.helpers.UserHelper;
 import com.ab.repositories.UserRepository;
 
 @Service
@@ -12,6 +15,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private UserHelper userHelper;
 	
 //	TODO: Login
 //	TODO: Logout
@@ -40,15 +46,25 @@ public class UserService {
 	}
 	**/
 	
-	/***
+	/**
+	 * @return *
 	 * 
 	 * 
 	 */
 	
 	
-	public void register(String firstName, String lastName, String email, String password, double balance) { 
+	public String register(Map<String, String> newUserDetails) { 
 		
-		User user = new User(firstName, lastName, email, password, 0);
+		if(!(userHelper.validateRegistrationPasswords(newUserDetails.get("password"), newUserDetails.get("confirmPassword")))) {
+			return "Passwords are not matching!";
+		}
+		
+		User user = new User(
+				            newUserDetails.get("firstName"), 
+				            newUserDetails.get("lastName"), 
+				            newUserDetails.get("email"), 
+				            newUserDetails.get("password"), 
+							0);
 		
 		userRepo.save(user);
 	}
