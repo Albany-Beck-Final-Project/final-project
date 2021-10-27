@@ -11,6 +11,10 @@ import com.ab.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+
+	
+	@Query("SELECT u from User u WHERE u.email=:email")
+	List<User> getByEmail(String email);
  
 	/**
 //	REGISTER

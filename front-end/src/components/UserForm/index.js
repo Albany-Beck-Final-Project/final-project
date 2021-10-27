@@ -11,6 +11,32 @@ export default (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const signUp = (e) => {
+    e.preventDefault();
+    // const body = formatBodyToJSON()
+    const options = {
+      url: `${API_URL}/register`,
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+      data: formatBodyToJSON()
+    };
+    axios(options).then(response => { console.log(response) })
+  }
+
+  const formatBodyToJSON = () => {
+    const body = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword
+    }
+    return JSON.stringify(body)
+  }
+
   if (props.form === "SIGNUP") {
 
     return (
@@ -49,7 +75,7 @@ export default (props) => {
             placeholder="Confirm Password"
           />
 
-          <input type="submit" className={submit} onSubmit={() => {  }} value="Sign Up" />
+          <input type="submit" className={submit} onSubmit={(e) => { signUp(e) }} value="Sign Up" />
       </div>
     )
   } else {

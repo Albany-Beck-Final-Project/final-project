@@ -3,6 +3,9 @@ package com.ab.services;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ab.dtos.UserDto;
@@ -18,6 +21,8 @@ public class UserService {
 	
 	@Autowired
 	private UserHelper userHelper;
+	
+	
 	
 //	TODO: Login
 //	TODO: Logout
@@ -58,6 +63,11 @@ public class UserService {
 		if(!(userHelper.validateRegistrationPasswords(newUserDetails.get("password"), newUserDetails.get("confirmPassword")))) {
 			return "Passwords are not matching!";
 		}
+		newUserDetails = userHelper.encryptUserData(newUserDetails);
+		
+		if(userHelper.emailExists(newUserDetails.get("email"))) {
+			return "Email already exists!";
+		}
 		
 		User user = new User(
 				            newUserDetails.get("firstName"), 
@@ -66,7 +76,18 @@ public class UserService {
 				            newUserDetails.get("password"), 
 							0);
 		
-		userRepo.save(user);
+		
+		if (userRepo.save(user) != null) {
+//			TODO: Encrypted email & password for authentication
+//			TODO: JWT token for authentication
+			
+//			TODO: Generate Cookie
+//			TODO: Save cookie in Session table 
+//			TODO: Return cookie to front end to store in sessions
+			return "Successfully Registered!";
+		} else {
+			return "Error Registering User!";
+		}
 	}
 	
 	/**
@@ -76,4 +97,7 @@ public class UserService {
 		
 	}
 	**/
+	
 }
+	
+	

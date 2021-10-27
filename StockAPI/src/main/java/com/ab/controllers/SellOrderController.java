@@ -15,10 +15,13 @@ public class SellOrderController {
 	@Autowired
 	private SellOrderService sellOrderService;
 	
-	public List<SellOrder> getAllOrders() {
-		
-		return sellOrderService.findAllOrders();
-	}
+//	TODO: Uncomment
+//	public List<SellOrder> getAllOrders() {
+//		
+//		return sellOrderService.findAllOrders();
+//	}
+	
+	
 	/**
 	public OrderStatus updateStatus(OrderStatus status, int id) {
 		
