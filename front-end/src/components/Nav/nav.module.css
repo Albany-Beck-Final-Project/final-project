@@ -1,0 +1,117 @@
+.navDiv {
+  width: 100%;
+  height: 100px;
+  top: 0;
+  left: 0;
+
+  background-color: #191924;
+
+  position: fixed;
+  z-index: 20;
+}
+
+.nav {
+  width: 100%;
+  height: 100px;
+  position: relative;
+}
+
+
+.userOptions, .homeDiv {
+  height: 50px;
+
+  top: 50%;
+  transform: translate(0, -50%);
+
+  position: absolute;
+}
+
+.userOptions {
+  right: 5%;
+}
+
+.homeDiv {
+  left: 5%;
+}
+
+.logInLink, .signUpLink, .logOut, .accountOptions, .homeLink {
+  color: #5A6369;
+
+  margin-top: 15px;
+
+  font-size: 20px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.logInLink, .homeLink {
+  float: right;
+
+}
+
+.signUpLink, .logOut {
+  float: right;
+  margin-left: 40px;
+}
+
+.logOut, .accountOptions {
+  border: none;
+  background: inherit;
+}
+
+.logOut:hover, .accountOptions:hover {
+  cursor: pointer;
+}
+
+.dropdown {
+  float:right;
+  position: relative;
+}
+
+.accountOptions {
+
+}
+
+.dropdownMenu {
+  background-color: #333345;
+
+  padding: 7px 15px;
+
+
+  position: absolute;
+
+  left: 0;
+  top: calc(100% + 10px);
+
+  pointer-events: none;
+  transition: 150ms ease-in-out;
+  opacity: 0;
+  transform: translateY(-30%);
+}
+
+.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.menuItems {
+  width: 100%;
+  white-space: nowrap;
+
+  border-bottom: 1px solid #5A6369;
+
+  padding: 8px 0;
+}
+
+.itemLinks, .homeLink {
+  font-size: 20px;
+  color: #5A6369;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#lastItem {
+  padding-bottom: none;
+  border: none;
+}

@@ -1,0 +1,111 @@
+.main {
+  width: 100%;
+  height: calc(100% - 100px);
+
+  top: 100px;
+  position: relative;
+}
+
+.main > hr {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 50px;
+
+  border-color: #ED6402;
+}
+
+.photoDiv {
+  width: 80vw;
+  height: 30vw;
+
+  margin-left: 10vw;
+  margin-top: 2.5vw;
+
+  background-color: #ED6402;
+
+  /* position: absolute; */
+}
+
+.about {
+
+  padding: 10px 30px;
+  color: #5A6369;
+}
+
+.about > h1 {
+  font-size: 36px;
+}
+
+.about > p {
+  font-size: 20px;
+}
+
+
+.portfolio, .orders {
+  position: absolute;
+  background-color: #333345;
+  overflow: auto;
+}
+
+.portfolio > h2, .orders > h2 {
+  margin: 5px;
+  text-align: center;
+}
+
+
+.portfolio {
+  width: 30%;
+  min-height: 78px;
+  color: #748087;
+
+  margin-top: 5%;
+  left: 5%;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+.orders {
+  width: 45%;
+  min-height: 100px;
+  color: #748087;
+
+  margin-top: 5%;
+  right: 5%;
+  padding: 0 5px;
+
+  box-sizing: border-box;
+}
+
+
+.orders > ul, .portfolio > ul {
+  list-style-type: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+
+
+
+
+
+.orderId {
+  flex-basis: 10%;
+}
+.orderDate {
+  flex-basis: 20%;
+}
+.orderStock {
+  flex-basis: 12.5%;
+}
+.orderShares {
+  flex-basis: 12.5%;
+}
+.orderPrice {
+  flex-basis: 15%;
+}
+.orderStatus {
+  flex-basis: 15%;
+}
+.orderDirection {
+  flex-basis: 15%;
+}

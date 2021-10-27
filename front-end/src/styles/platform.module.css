@@ -1,0 +1,104 @@
+.platform {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+}
+
+.home {
+  margin-top: 0;
+  right: 0;
+
+  width: 10%;
+  height: 10%;
+
+  position: absolute;
+  z-index: 20;
+
+  background-color: #191924;
+
+  display: flex;
+}
+
+.homeLink {
+  text-decoration: none;
+  text-align: center;
+
+  align-self: center;
+  width: 100%;
+  font-size: 32px;
+  line-height: 1;
+
+  color: #748087;
+}
+
+
+.exchange {
+  width: calc(80% - 1px);
+  height: 100vh;
+
+  position: relative;
+}
+
+.exchangeOption {
+  width: 100%;
+  height: 10%;
+  left: 0;
+  border-bottom: 1px solid #ED6402;
+
+  display: flex;
+}
+
+.exchangeOption > button {
+  width: 100%;
+  flex-grow: 1;
+  outline: none;
+  border: none;
+  border-right: 1px solid #748087;
+}
+
+.buyOptionButton, .sellOptionButton {
+  font-size: 32px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.buyOptionButton {
+  background-color: #00FF00;
+}
+
+.sellOptionButton {
+  background-color: #FF0000;
+  border: none !important;
+}
+
+.buyMain, .sellMain {
+  width: 50%;
+  height: 100vh;
+
+  top: 10%;
+  position: absolute;
+}
+
+.buyMain {
+  left: 0;
+}
+
+.buyMain > ul, .sellMain > ul {
+  list-style-type: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+.sellMain {
+  right: 0;
+}
+
+.buyMain, .exchange {
+  border-right: 1px solid #ED6402;
+}
+
+.historyMain {
+  width: 20%;
+  height: 100vh;
+}
