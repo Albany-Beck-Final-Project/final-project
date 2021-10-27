@@ -15,8 +15,8 @@ export default () => {
 
 
   const _checkIfPriceAllowed = () => {
-    // return ((orderPriceType !== "Market Price") && (sorStrategy != "Best Price"))
-    return true;
+    return ((orderPriceType !== "Market Price") && (sorStrategy != "Best Price"))
+    // return true;
   }
 
   const convertOrderPrice = () => {

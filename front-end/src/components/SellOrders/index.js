@@ -1,20 +1,20 @@
 import React from 'react';
 
-import { eachBuyOrder, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus, orderDirection, buyMain, headers } from './buyOrders.module.css'
-import { BuyService } from '../../services';
+import { eachSellOrder, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus, orderDirection, buyMain, headers } from './sellOrders.module.css'
+import { SellService } from '../../services';
 
 
-const BuyOrders = () => {
+const SellOrders = () => {
 
   const renderOrders = () => {
     let rendering = [];
-    let orders = BuyService.getOrders();
+    let orders = SellService.getOrders();
 
     orders.forEach((order) => {
       rendering.push(
         <li>
-          <div className={eachBuyOrder}>
-            <div className={orderDirection} style={{ color: "#18C412" }}><strong>{order.direction}</strong></div>
+          <div className={eachSellOrder}>
+            <div className={orderDirection} style={{ color: "#FF0000" }}><strong>{order.direction}</strong></div>
             <div className={orderStock}>{order.stock}</div>
             <div className={orderShares}>{order.shares}</div>
             <div className={orderPrice}>£{order.price}</div>
@@ -30,7 +30,7 @@ const BuyOrders = () => {
   const renderHeaders = () => {
     return (
       <li>
-        <div className={eachBuyOrder} style={{ borderWidth: 0, marginBottom: 20, fontStyle: "italic" }}>
+        <div className={eachSellOrder} style={{ borderWidth: 0, marginBottom: 20, fontStyle: "italic" }}>
           <div className={orderDirection}>Direction</div>
           <div className={orderStock}>Symbol</div>
           <div className={orderShares}>Quantity</div>
@@ -51,4 +51,4 @@ const BuyOrders = () => {
     </div>
   )
 }
-export default BuyOrders;
+export default SellOrders;
