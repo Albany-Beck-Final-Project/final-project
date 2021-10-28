@@ -11,31 +11,31 @@ export default (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const signUp = (e) => {
-    e.preventDefault();
+  // const signUp = (e) => {
+  //   e.preventDefault();
     // const body = formatBodyToJSON()
-    const options = {
-      url: `${API_URL}/register`,
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8'
-      },
-      data: formatBodyToJSON()
-    };
-    axios(options).then(response => { console.log(response) })
-  }
-
-  const formatBodyToJSON = () => {
-    const body = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword
-    }
-    return JSON.stringify(body)
-  }
+  //   const options = {
+  //     url: `${API_URL}/register`,
+  //     method: 'POST',
+  //     headers: {
+  //       'Accept': 'application/json',
+  //       'Content-Type': 'application/json;charset=UTF-8'
+  //     },
+  //     data: formatBodyToJSON()
+  //   };
+  //   axios(options).then(response => { console.log(response) })
+  // }
+  //
+  // const formatBodyToJSON = () => {
+  //   const body = {
+  //     firstName: firstName,
+  //     lastName: lastName,
+  //     email: email,
+  //     password: password,
+  //     confirmPassword: confirmPassword
+  //   }
+  //   return JSON.stringify(body)
+  // }
 
   if (props.form === "SIGNUP") {
 
@@ -75,16 +75,16 @@ export default (props) => {
             placeholder="Confirm Password"
           />
 
-          <input type="submit" className={submit} onSubmit={(e) => { signUp(e) }} value="Sign Up" />
+          <input type="submit" className={submit} onSubmit={(e) => { e.preventDefault(); }} value="Sign Up" />
       </div>
     )
   } else {
     return (
       <div className={formDiv}>
         <h2 className={formTitle}>Log In</h2>
-        <form className={form}>
+        <form className={form} action="http://localhost:8080/login" method="post" >
         <input
-          type="text" name="email" className={input}
+          type="text" name="username" className={input}
           onChange={(e) => { setEmail(e.target.value) }}
           value={email}
           placeholder="Email"
