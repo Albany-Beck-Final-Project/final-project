@@ -18,6 +18,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class User {	
 	
+	public User(String firstName, String lastName, String email, String password, int balance) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.balance = balance;
+	}
+	
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int userID;

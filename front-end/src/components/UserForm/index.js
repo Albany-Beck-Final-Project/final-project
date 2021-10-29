@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { navigate } from 'gatsby';
 
 import { formDiv, formTitle, form, input, submit } from './userForm.module.css';
 
 export default (props) => {
 
   const REGEX = /./ig;
+  const API_URL = "https://localhost:8080"
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,16 +29,42 @@ export default (props) => {
   //   axios(options).then(response => { console.log(response) })
   // }
   //
-  // const formatBodyToJSON = () => {
-  //   const body = {
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     email: email,
-  //     password: password,
-  //     confirmPassword: confirmPassword
-  //   }
-  //   return JSON.stringify(body)
-  // }
+  const formatBodyToJSON = () => {
+    return JSON.stringify({
+      firstName: window.btoa(firstName),
+      lastName: window.btoa(lastName),
+      email: window.btoa(email),
+      password: window.btoa(password),
+      confirmPassword: window.btoa(confirmPassword)
+    })
+  }
+
+  const logIn = () => {
+    const options = generateOptions("/users");
+    // axios.post(`${API_URL}/users`, formatBodyToJSON())
+    // .then(response => { console.log(response) })
+    fetch(`${API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8'
+      },
+      data: formatBodyToJSON()
+    })
+    .then(data => console.log(data))
+  }
+
+  const generateOptions = (urlPath) => {
+    return {
+      url: `${API_URL}${urlPath}`,
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          data: formatBodyToJSON()
+        }
+    }
 
   if (props.form === "SIGNUP") {
 
@@ -82,7 +111,7 @@ export default (props) => {
     return (
       <div className={formDiv}>
         <h2 className={formTitle}>Log In</h2>
-        <form className={form} action="http://localhost:8080/login" method="post" >
+        {/*<form className={form}>*/}
         <input
           type="text" name="username" className={input}
           onChange={(e) => { setEmail(e.target.value) }}
@@ -97,8 +126,9 @@ export default (props) => {
           placeholder="Password"
         />
 
-          <input type="submit" className={submit} onSubmit={() => {  }} value="Log In" />
-        </form>
+          {/*<input type="submit" className={submit} onSubmit={(e) => { e.preventDefault(); logIn(); navigate("/") }} value="Log In" />
+        </form>*/}
+        <button className={submit} onClick={(e) => { e.preventDefault(); logIn(); navigate("/") }}>Log In</button>
       </div>
     )
   }
