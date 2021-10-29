@@ -2,6 +2,7 @@ package com.ab.entities;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,14 +16,17 @@ public class MyUserDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private String userName;
 	private String password;
+	private List<GrantedAuthority> authorities;
 	
 	
 	
 	
 	
 	public MyUserDetails(User user) {
+		System.out.println("MyUserDetails constructor");
 		this.userName = user.getEmail();
 		this.password = user.getPassword();
+		this.authorities = Arrays.asList(new SimpleGrantedAuthority("USER"));
 	}
 	
 	
@@ -36,7 +40,7 @@ public class MyUserDetails implements UserDetails {
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
-        return Arrays.asList(new SimpleGrantedAuthority("USER"));
+        return this.authorities;
     }
 
     @Override

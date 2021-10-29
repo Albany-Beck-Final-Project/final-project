@@ -89,6 +89,23 @@ public class UserService {
 			return "Error Registering User!";
 		}
 	}
+
+
+
+	public User login(String email) {
+//		1. Encrypt User Data (Email and Password)
+		
+//		2. Check to see if user exists by looking for matching email (email is unique)
+		return userRepo.getUserByEmail(email);
+	
+	}
+
+
+
+	public User getByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepo.getUserByEmail(email);
+	}
 	
 	/**
 	public void login(String email, String password) { 

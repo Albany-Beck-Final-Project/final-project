@@ -18,16 +18,16 @@ public class Session {
 	
 	@Id
 	@Getter
-	private String sessionID;
+	private String sessionId;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	@Getter
 	private User user;
 
-	public Session(String sessionID, User user) {
+	public Session(String sessionId, User user) {
 		super();
-		this.sessionID = sessionID;
+		this.sessionId = sessionId;
 		this.user = user;
 	}
 	
@@ -35,8 +35,8 @@ public class Session {
 	public Session() {}
 
 
-	public String getSessionID() {
-		return sessionID;
+	public String getSessionId() {
+		return sessionId;
 	}
 
 

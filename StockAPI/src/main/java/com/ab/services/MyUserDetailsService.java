@@ -25,13 +25,12 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		
-		Optional<User> user = userRepo.testGetByEmail(userName);
-		System.out.println(user.get().getEmail());
-		System.out.println(user.get().getPassword());
-		System.out.println(user.get().getLastName());
-		user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		Optional<User> user = userRepo.getByEmail(userName);
+		System.out.println("MyUserDetails service");
+//		user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
 		
-		return user.map(MyUserDetails::new).get();
+//		return user.map(MyUserDetails::new).get();
+		return new MyUserDetails(user.get());
 	}
 	
 
