@@ -23,12 +23,12 @@ public class BuyOrderRestController {
 	@Autowired
 	private Authorization auth;
 	
-	@PostMapping("/buyorders")
-	public List<BuyOrder> getOrders(@RequestBody Map<String, String> userDetails) {
-		if(!(auth.authorizeSession(userDetails))) {
-			return null;
-		}
-		return buyOrderService.getAllBuyOrders();
-	}
+//	@PostMapping("/buyorders")
+//	public List<BuyOrder> getOrders(@RequestBody Map<String, String> userDetails) {
+//		if(!(auth.authorizeSession(userDetails))) {
+//			return null;
+//		}
+//		return buyOrderService.getAllBuyOrders();
+//	}
 
 }
