@@ -7,6 +7,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,37 +15,16 @@ import lombok.NoArgsConstructor;
 @Table(name="Session")
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Session {
 	
 	@Id
 	@Getter
 	private String sessionId;
+
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	@Getter
 	private User user;
-
-	public Session(String sessionId, User user) {
-		super();
-		this.sessionId = sessionId;
-		this.user = user;
-	}
-	
-	
-	public Session() {}
-
-
-	public String getSessionId() {
-		return sessionId;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-	
-	
-	
 	
 }

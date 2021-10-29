@@ -105,6 +105,7 @@ public class UserService {
 	public User getByEmail(String email) {
 		// TODO Auto-generated method stub
 		return userRepo.getUserByEmail(email);
+
 	}
 	
 	/**

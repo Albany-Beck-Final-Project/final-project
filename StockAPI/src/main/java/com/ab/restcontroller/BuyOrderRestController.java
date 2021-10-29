@@ -30,4 +30,5 @@ public class BuyOrderRestController {
 		}
 		return buyOrderService.getAllBuyOrders();
 	}
+
 }

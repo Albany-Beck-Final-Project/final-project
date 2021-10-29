@@ -1,5 +1,7 @@
 package com.ab.repositories;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,25 +11,25 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ab.entities.BuyOrder;
-import com.ab.enums.OrderStatus;
 
 @Repository	
 public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 
 	//Basic methods are already included
-	/**
-	@Transactional
-	@Modifying
-	@Query("UPDATE buy_order")
-	public OrderStatus updateOrderStatusBuy(@Param("orderStatus")OrderStatus orderStatus, @Param("id")int id);
-	**/
-	/**
-	@Transactional
-	@Modifying
-    @Query("UPDATE Employee e SET e.employeeEmail =:email WHERE e.employeeId =:id")
-    public int updateEmployeeEmailByEmployeeId(@Param("email")String email, @Param("id")int id);
 	
-	**/
+	@Query(value="SELECT * from BuyOrder b WHERE b.buyOrderId =: id", nativeQuery=true)
+	public List<BuyOrder> findBuyOrderById(@Param("id") int id);
+	
+	@Transactional 
+	@Modifying
+	@Query("UPDATE BuyOrder b SET b.orderStatus =:status WHERE b.buyOrderId =:id")
+	public int updateOrderStatusByOrderId(@Param("status")String status,@Param("id") int id);
+	
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE BuyOrder b SET b.orderType =:type WHERE b.buyOrderId =:id")
+	public int updateOrderTypeByOrderId(@Param("type")String type, @Param("id") int id);
 	
 	
 	

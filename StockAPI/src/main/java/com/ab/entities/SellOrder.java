@@ -11,31 +11,18 @@ import com.ab.enums.OrderStatus;
 import com.ab.enums.OrderType;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class SellOrder extends Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sellOrderId;
 
-	public SellOrder(int sellOrderId, double price, int shares, LocalDateTime timeOfPurchase, OrderStatus orderStatus, OrderType orderType,
-			double limitPrice, User user, OrderBook orderBook) {
-		super( price, shares, timeOfPurchase, orderStatus, orderType,
-				 limitPrice, user, orderBook);
-		this.sellOrderId = sellOrderId;
-	}
-	
-	
-	public SellOrder() {}
 
-
-	public int getSellOrderId() {
-		return sellOrderId;
-	}
-	
-	
 }

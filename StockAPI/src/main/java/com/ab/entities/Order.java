@@ -16,8 +16,15 @@ import javax.persistence.MappedSuperclass;
 import com.ab.enums.OrderStatus;
 import com.ab.enums.OrderType;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @MappedSuperclass
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order {
 	
 	
@@ -28,10 +35,10 @@ public class Order {
 	private LocalDateTime timeOfPurchase;
 	
 	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;	
+	private String orderStatus;	
 	
 	@Enumerated(EnumType.STRING)
-	private OrderType orderType;
+	private String orderType;
 
 	private double limitPrice;
 	
@@ -43,65 +50,5 @@ public class Order {
 	@ManyToOne 
 	@JoinColumn(name = "order_book_id")
 	private OrderBook orderBook;
-
-	public Order(double price, int shares, LocalDateTime timeOfPurchase, OrderStatus orderStatus, OrderType orderType,
-			double limitPrice, User user, OrderBook orderBook) {
-		super();
-		this.price = price;
-		this.shares = shares;
-		this.timeOfPurchase = timeOfPurchase;
-		this.orderStatus = orderStatus;
-		this.orderType = orderType;
-		this.limitPrice = limitPrice;
-		this.user = user;
-		this.orderBook = orderBook;
-	} 
-	
-	
-	public Order() {}
-
-
-	public double getPrice() {
-		return price;
-	}
-
-
-	public int getShares() {
-		return shares;
-	}
-
-
-	public LocalDateTime getTimeOfPurchase() {
-		return timeOfPurchase;
-	}
-
-
-	public OrderStatus getOrderStatus() {
-		return orderStatus;
-	}
-
-
-	public OrderType getOrderType() {
-		return orderType;
-	}
-
-
-	public double getLimitPrice() {
-		return limitPrice;
-	}
-
-
-	public User getUser() {
-		return user;
-	}
-
-
-	public OrderBook getOrderBook() {
-		return orderBook;
-	}
-	
-	
-	
-	
 
 }
