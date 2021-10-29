@@ -1,8 +1,9 @@
 package com.ab.ServiceTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,7 +19,12 @@ public class SellOrderServiceTest {
 	
 	@Test
 	public void getOrders() { 
-		sellOrderService.findAllOrders();
-		assertEquals("[]", sellOrderService.findAllOrders().toString());
+		sellOrderService.getAllSellOrders();
+		assertEquals("[]", sellOrderService.getAllSellOrders().toString());
 	}
+
+	//@Test
+	//public void updateOrderStatus(String email, int id) { 
+	//		
+	//}
 }

@@ -19,5 +19,7 @@ class StockApiApplicationTests {
 		UserDto newUser = new UserDto("Test", "User", "testing@example.com", "password1234", 0.0);
 		assertEquals(true, this.userService.register(newUser));
 	}
-	**/
+**/
+
+
 }

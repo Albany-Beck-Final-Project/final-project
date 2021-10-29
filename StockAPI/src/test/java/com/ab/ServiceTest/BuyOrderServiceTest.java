@@ -1,11 +1,12 @@
 package com.ab.ServiceTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ab.entities.BuyOrder;
 import com.ab.services.BuyOrderService;
 
 @SpringBootTest
@@ -20,8 +21,10 @@ public class BuyOrderServiceTest {
 		assertEquals("[]",buyOrderService.getAllBuyOrders().toString());
 	}
 
-	//@Test
-	//public void deleteOrder() { 
-	
-	//}
+	@Test
+	public void deleteOrder() { 
+		BuyOrder order = new BuyOrder();
+		buyOrderService.deleteBuyOrder(order.getBuyOrderId());
+		assertEquals(order, buyOrderService.deleteBuyOrder(order.getBuyOrderId()));
+	}
 }

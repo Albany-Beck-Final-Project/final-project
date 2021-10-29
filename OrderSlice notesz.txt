@@ -1,0 +1,7 @@
+Order Slicing 
+
+-> If the order is above a certain size then it should make multiple smaller ones. 
+
+
+When a user executes a buy or sell order call the sort order to filter through the buy order to see if theres a 
+match in a sell order. This is ordered by date. 

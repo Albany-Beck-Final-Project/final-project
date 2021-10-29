@@ -15,8 +15,5 @@ public class BuyOrderRestController {
 	@Autowired
 	private BuyOrderService buyOrderService;
 	
-	@GetMapping("/buyorders")
-	public List<BuyOrder> getOrders() {
-		return buyOrderService.getAllBuyOrders();
-	}
+	
 }

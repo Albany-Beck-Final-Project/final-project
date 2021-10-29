@@ -17,7 +17,7 @@ public class SellOrderController {
 	
 	public List<SellOrder> getAllOrders() {
 		
-		return sellOrderService.findAllOrders();
+		return sellOrderService.getAllSellOrders();
 	}
 	/**
 	public OrderStatus updateStatus(OrderStatus status, int id) {
