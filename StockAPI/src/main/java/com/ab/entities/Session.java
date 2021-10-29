@@ -19,16 +19,12 @@ import lombok.NoArgsConstructor;
 public class Session {
 	
 	@Id
-	private String sessionID;
+	@Getter
+	private String sessionId;
+
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-
-	
-	
-	
-	
-	
 	
 }

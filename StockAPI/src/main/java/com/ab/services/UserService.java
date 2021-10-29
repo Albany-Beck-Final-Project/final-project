@@ -1,10 +1,16 @@
 package com.ab.services;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ab.dtos.UserDto;
 import com.ab.entities.User;
+import com.ab.helpers.UserHelper;
 import com.ab.repositories.UserRepository;
 
 @Service
@@ -12,6 +18,11 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private UserHelper userHelper;
+	
+	
 	
 //	TODO: Login
 //	TODO: Logout
@@ -40,17 +51,61 @@ public class UserService {
 	}
 	**/
 	
-	/***
+	/**
+	 * @return *
 	 * 
 	 * 
 	 */
 	
 	
-	public void register(String firstName, String lastName, String email, String password, double balance) { 
+	public String register(Map<String, String> newUserDetails) { 
 		
-		//User user = new User(firstName, lastName, email, password, 0);
+		if(!(userHelper.validateRegistrationPasswords(newUserDetails.get("password"), newUserDetails.get("confirmPassword")))) {
+			return "Passwords are not matching!";
+		}
+		newUserDetails = userHelper.encryptUserData(newUserDetails);
 		
-		//userRepo.save(user);
+		if(userHelper.emailExists(newUserDetails.get("email"))) {
+			return "Email already exists!";
+		}
+		
+		User user = new User(
+				            newUserDetails.get("firstName"), 
+				            newUserDetails.get("lastName"), 
+				            newUserDetails.get("email"), 
+				            newUserDetails.get("password"), 
+							0);
+		
+		
+		if (userRepo.save(user) != null) {
+//			TODO: Encrypted email & password for authentication
+//			TODO: JWT token for authentication
+			
+//			TODO: Generate Cookie
+//			TODO: Save cookie in Session table 
+//			TODO: Return cookie to front end to store in sessions
+			return "Successfully Registered!";
+		} else {
+			return "Error Registering User!";
+		}
+	}
+
+
+
+	public User login(String email) {
+//		1. Encrypt User Data (Email and Password)
+		
+//		2. Check to see if user exists by looking for matching email (email is unique)
+		return userRepo.getUserByEmail(email);
+	
+	}
+
+
+
+	public User getByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userRepo.getUserByEmail(email);
+
 	}
 	
 	/**
@@ -60,4 +115,7 @@ public class UserService {
 		
 	}
 	**/
+	
 }
+	
+	

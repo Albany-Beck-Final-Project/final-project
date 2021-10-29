@@ -15,10 +15,12 @@ public class SellOrderController {
 	@Autowired
 	private SellOrderService sellOrderService;
 	
+
 	public List<SellOrder> getAllOrders() {
 		
 		return sellOrderService.getAllSellOrders();
 	}
+
 	/**
 	public OrderStatus updateStatus(OrderStatus status, int id) {
 		

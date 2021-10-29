@@ -1,0 +1,46 @@
+.buyPriceInput {
+
+}
+
+.buyOption {
+  height: 15% !important;
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.buyOption input, .buyOption select {
+  border: none;
+  border-bottom: 1px solid #ED6402;
+  background-color: #262633;
+  color: #748087;
+  height: 30%;
+  width: calc(80% / 5);
+  margin-left: calc(20% / 6);
+}
+
+.buyOption input {
+  box-sizing: border-box;
+  padding-left: 5px;
+}
+
+.buyOption input:focus, .buyOption select:focus {
+  outline: none;
+  background-color: #333345;
+}
+
+.buySubmit {
+  color: #ED6402 !important;
+}
+
+.buySubmit:hover {
+  cursor: pointer;
+  background-color: #333345;
+}
+
+.buySubmit:focus {
+  outline: none;
+  background-color: #ED6402;
+  color: #262633;
+}
