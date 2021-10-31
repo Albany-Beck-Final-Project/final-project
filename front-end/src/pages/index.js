@@ -45,7 +45,7 @@ export default function Home() {
     )
   }
 
-  if (window.localStorage.StockPlatform) {
+  if (window.localStorage.StockPlatform !== undefined) {
     return (
       <div>
         <Nav path="/"/>

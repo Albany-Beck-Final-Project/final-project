@@ -59,13 +59,16 @@ public class UserService {
 	
 	
 	public String register(Map<String, String> newUserDetails) { 
-		
+		System.out.println("triggered register");
 		if(!(userHelper.validateRegistrationPasswords(newUserDetails.get("password"), newUserDetails.get("confirmPassword")))) {
+			System.out.println("passwords don't match");
 			return "Passwords are not matching!";
 		}
 		newUserDetails = userHelper.encryptUserData(newUserDetails);
+		System.out.println("encrypted details");
 		
 		if(userHelper.emailExists(newUserDetails.get("email"))) {
+			System.out.println("email exists");
 			return "Email already exists!";
 		}
 		
@@ -75,7 +78,7 @@ public class UserService {
 				            newUserDetails.get("email"), 
 				            newUserDetails.get("password"), 
 							0);
-		
+		System.out.println("new user object");
 		
 		if (userRepo.save(user) != null) {
 //			TODO: Encrypted email & password for authentication

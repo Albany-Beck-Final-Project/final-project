@@ -2,7 +2,10 @@ package com.ab.repositories;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.ab.entities.Session;
@@ -16,5 +19,10 @@ public interface SessionRepository extends JpaRepository<Session, String> {
 
 	@Query("SELECT s.user FROM Session s WHERE s.sessionId=:sessionId")
 	public Optional<User> getUserBySessionId(String sessionId);
+
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM Session s WHERE s.sessionId=:sessionId")
+	public void removeBySessionId(String sessionId);
 
 }

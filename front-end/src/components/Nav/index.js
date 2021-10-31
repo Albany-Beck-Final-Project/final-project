@@ -1,22 +1,46 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 
 import { navDiv, nav, homeDiv, homeLink, userOptions, logInLink, signUpLink, logOut, dropdown, accountOptions, dropdownMenu, menuItems, itemLinks, lastItem, active } from './nav.module.css';
 
 export default (props) => {
 
+  const API_URL = "http://localhost:8080"
+
+  const logOutHandler = () => {
+    fetch(`${API_URL}/users`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({
+        "session": window.localStorage.StockPlatform
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.status)
+      if (data.status === "successful") {
+        window.localStorage.clear();
+        navigate("/login");
+      }
+    })
+  }
+
   const userOptionsRendering = () => {
-    if (props.path === "/" && !(window.localStorage.StockPlatform)) {
+    if (props.path === "/" && window.localStorage.StockPlatform === undefined) {
       return (
         <div className={userOptions}>
           <Link to="/signup" className={signUpLink}>Sign Up</Link>
-          <Link to="/login" className={logInLink} >Log In</Link>
+          <Link to="/login" className={logInLink}>Log In</Link>
         </div>
       )
     } else if (props.path === "/signup") {
       return (
         <div className={userOptions}>
-          <Link to="/login" className={logInLink} >Log In</Link>
+          <Link to="/login" className={logInLink}>Log In</Link>
         </div>
       )
     } else if (props.path === "/login") {
@@ -25,10 +49,10 @@ export default (props) => {
           <Link to="/signup" className={signUpLink}>Sign Up</Link>
         </div>
       )
-    } else if (props.path === "/" && window.localStorage.StockPlatform) {
+    } else if (props.path === "/" && window.localStorage.StockPlatform !== undefined) {
       return (
         <div className={userOptions}>
-          <button className={logOut} onClick={() => { }}>Log Out</button>
+          <button className={logOut} onClick={(e) => { e.preventDefault(); logOutHandler(); }}>Log Out</button>
           <div className={dropdown}>
             <button className={accountOptions} id="accountOptionButton" onClick={() => { handleDropdown() }}>Account &#9660;</button>
             <div className={dropdownMenu} id="dropdownMenu">

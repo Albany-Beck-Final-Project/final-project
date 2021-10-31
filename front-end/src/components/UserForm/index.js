@@ -2,33 +2,18 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { navigate } from 'gatsby';
 
-import { formDiv, formTitle, form, input, submit } from './userForm.module.css';
+import { formDiv, formTitle, form, input, submit, errorMessage } from './userForm.module.css';
 
 export default (props) => {
 
   const REGEX = /./ig;
-  const API_URL = "https://localhost:8080"
+  const API_URL = "http://localhost:8080"
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const signUp = (e) => {
-  //   e.preventDefault();
-    // const body = formatBodyToJSON()
-  //   const options = {
-  //     url: `${API_URL}/register`,
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json;charset=UTF-8'
-  //     },
-  //     data: formatBodyToJSON()
-  //   };
-  //   axios(options).then(response => { console.log(response) })
-  // }
-  //
   const formatBodyToJSON = () => {
     return JSON.stringify({
       firstName: window.btoa(firstName),
@@ -40,18 +25,48 @@ export default (props) => {
   }
 
   const logIn = () => {
-    const options = generateOptions("/users");
-    // axios.post(`${API_URL}/users`, formatBodyToJSON())
-    // .then(response => { console.log(response) })
     fetch(`${API_URL}/users`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json;charset=UTF-8'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
-      data: formatBodyToJSON()
+      body: formatBodyToJSON()
     })
-    .then(data => console.log(data))
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "successful") {
+        // window.localStorage.StockPlatform = {
+          // session: data.session
+        // }
+        window.localStorage.setItem("StockPlatform", data.session)
+        navigate("/")
+      }
+    })
+  }
+
+  const signUp = () => {
+    fetch(`${API_URL}/users/new`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: formatBodyToJSON()
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "Successfully Registered!") {
+        // setTimeout(() => {
+          navigate("/login");
+        // }, 1000)
+      } else {
+        document.getElementById("signUpError").innerHTML = data.status;
+        window.scrollTo(0,0);
+      }
+    })
   }
 
   const generateOptions = (urlPath) => {
@@ -66,11 +81,29 @@ export default (props) => {
         }
     }
 
+    const isFormButtonDisabled = (formType) => {
+      if (formType === 'signup') {
+        if (firstName.length > 0 && lastName.length > 0 && email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
+          return false
+        } else {
+          return true
+        }
+      } else {
+        if (email.length > 0 && password.length > 0) {
+          return false
+        } else {
+          console.log("right place!")
+          return true
+        }
+      }
+    }
+
   if (props.form === "SIGNUP") {
 
     return (
       <div className={formDiv}>
-      <h2 className={formTitle}>Sign Up</h2>
+        <h2 className={formTitle}>Sign Up</h2>
+        <div className={errorMessage} id="signUpError"></div>
           <input
             type="text" name="firstName" className={input}
             onChange={(e) => { setFirstName(e.target.value) }}
@@ -84,7 +117,7 @@ export default (props) => {
             placeholder="Last Name"
           />
           <input
-            type="text" name="email" className={input}
+            type="email" name="email" className={input}
             onChange={(e) => { setEmail(e.target.value) }}
             value={email}
             placeholder="Email"
@@ -104,7 +137,7 @@ export default (props) => {
             placeholder="Confirm Password"
           />
 
-          <input type="submit" className={submit} onSubmit={(e) => { e.preventDefault(); }} value="Sign Up" />
+          <button className={submit} onClick={(e) => { e.preventDefault(); signUp(); }} disabled={isFormButtonDisabled("signup")}>Sign Up</button>
       </div>
     )
   } else {
@@ -113,7 +146,7 @@ export default (props) => {
         <h2 className={formTitle}>Log In</h2>
         {/*<form className={form}>*/}
         <input
-          type="text" name="username" className={input}
+          type="email" name="email" className={input}
           onChange={(e) => { setEmail(e.target.value) }}
           value={email}
           placeholder="Email"
@@ -128,7 +161,7 @@ export default (props) => {
 
           {/*<input type="submit" className={submit} onSubmit={(e) => { e.preventDefault(); logIn(); navigate("/") }} value="Log In" />
         </form>*/}
-        <button className={submit} onClick={(e) => { e.preventDefault(); logIn(); navigate("/") }}>Log In</button>
+        <button className={submit} onClick={(e) => { e.preventDefault(); logIn(); }} disabled={isFormButtonDisabled("login")}>Log In</button>
       </div>
     )
   }
