@@ -2,6 +2,7 @@ package com.ab.restcontroller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +28,7 @@ import com.ab.services.ISessionService;
 import com.ab.services.UserService;
 
 @RestController
-//@CrossOrigin(origins= { "localhost:6030" })
+@CrossOrigin(origins = "http://localhost:6030")
 public class SessionController {
 
 	@Autowired
@@ -39,19 +41,29 @@ public class SessionController {
 	@Autowired Authorization auth;
 	
 	@PostMapping("/users")
-	public String login(@RequestBody Map<String, String> userDetails) throws IOException {
+	public Map<String, String> login(@RequestBody Map<String, String> userDetails) throws IOException {
+		Map<String, String> returnJson = new HashMap<>();
 		if(!(auth.authorizeLogin(userDetails))) {
-			return "Error";
+			returnJson.put("status", "Error");
+		} else {
+			returnJson.put("status", "successful");
+	
+			User user = userService.login(auth.getEmail(userDetails));
+			
+			returnJson.put("session",  sessionService.generateSession(user));
 		}
-		User user = userService.login(auth.getEmail(userDetails));
-		return sessionService.generateSession(user);
+		return returnJson;
 //		System.out.println(userDetails);
 	}
 	
-//	@GetMapping("/login")
-//	public RedirectView testLogin(Principal p) throws IOException {
-//		
-//	}
+	@DeleteMapping("/users")
+	public Map<String, String> logout(@RequestBody Map<String, String> sessionDetails) {
+		Map<String, String> returnJson = new HashMap<>();
+		
+		returnJson.put("status", sessionService.removeSession(sessionDetails.get("session")));
+			
+		return returnJson;
+	}
 	
 	
 	

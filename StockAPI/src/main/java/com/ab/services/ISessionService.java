@@ -6,4 +6,6 @@ public interface ISessionService {
 
 	public String generateSession(User user);
 
+	public String removeSession(String sessionId);
+
 }

@@ -17,7 +17,7 @@ public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 
 	//Basic methods are already included
 	
-	@Query(value="SELECT * from BuyOrder b WHERE b.buyOrderId =: id", nativeQuery=true)
+	@Query("SELECT b from BuyOrder b WHERE b.buyOrderId=:id")
 	public List<BuyOrder> findBuyOrderById(@Param("id") int id);
 	
 	@Transactional 
@@ -30,6 +30,10 @@ public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 	@Modifying
 	@Query("UPDATE BuyOrder b SET b.orderType =:type WHERE b.buyOrderId =:id")
 	public int updateOrderTypeByOrderId(@Param("type")String type, @Param("id") int id);
+
+	@Query("SELECT b FROM BuyOrder b WHERE b.user.userId=:userId")
+	public List<BuyOrder> findAllByUserId(int userId);
+
 	
 	
 	

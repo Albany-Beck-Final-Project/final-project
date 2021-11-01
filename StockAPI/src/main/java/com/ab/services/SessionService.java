@@ -25,4 +25,10 @@ public class SessionService implements ISessionService {
 		}
 		return null;
 	}
+	
+	@Override
+	public String removeSession(String sessionId) {
+		sessionRepo.removeBySessionId(sessionId);
+		return "successful";
+	}
 }

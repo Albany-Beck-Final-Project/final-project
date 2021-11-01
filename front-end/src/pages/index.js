@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import "../styles/global.css";
 
 import Nav from '../components/Nav';
+import { SellService, BuyService } from '../services';
 import { main, photoDiv, about, portfolio, orders, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus,
   orderDirection } from '../styles/index.module.css';
 
@@ -14,23 +15,48 @@ export default function Home() {
   if (window.localStorage.StockPlatform) {
     // USESTATE
   }
+  const [orderList, setOrderList] = useState([]);
 
+  useEffect(async () => {
+    setOrderList(
+      // const testOrders = 
+      await BuyService.getUserOrders()
+    )
+    // console.log(testOrders);
+  }, [])
+
+  const renderBuyOrders = () => {
+
+  }
 
   const renderOrders = () => {
+    let jsx = [];
+    if (orderList.length === 0) {
+      return null;
+    }
+    orderList.forEach(order => {
+      jsx.push(
+        <li>
+          <div className={eachOrderMain}>
+              <div className={orderId}>{order.orderId}</div>
+              <div className={orderDate}>{order.timeOfPurchase}</div>
+              <div className={orderStock}>{order.orderBook.orderBookId}</div>
+              <div className={orderShares}>{order.shares}</div>
+              <div className={orderPrice}>£{order.price}</div>
+              <div className={orderStatus}>{order.orderStatus}</div>
+              {/*<div className={orderDirection}>{orderDirection}</div>*/}
+          </div>
+        </li>
+      )
+    })
+    return jsx;
+  }
+
+  const getOrders = () => {
     // ITERATE
-    return (
-      <li>
-        <div className={eachOrderMain}>
-            <div className={orderId}>1014</div>
-            <div className={orderDate}>24 OCT 2021</div>
-            <div className={orderStock}>AAPL</div>
-            <div className={orderShares}>4</div>
-            <div className={orderPrice}>£592.48</div>
-            <div className={orderStatus}>FILLED</div>
-            <div className={orderDirection}>SELL</div>
-        </div>
-      </li>
-    )
+    let jsx = [];
+    jsx.push(renderOrders(orderList))
+    return jsx;
   }
 
   const renderPortfolio = () => {
@@ -45,7 +71,7 @@ export default function Home() {
     )
   }
 
-  if (window.localStorage.StockPlatform) {
+  if (window.localStorage.StockPlatform !== undefined) {
     return (
       <div>
         <Nav path="/"/>

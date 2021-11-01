@@ -35,16 +35,16 @@ public class Order {
 	private LocalDateTime timeOfPurchase;
 	
 	@Enumerated(EnumType.STRING)
-	private String orderStatus;	
+	private OrderStatus orderStatus;	
 	
 	@Enumerated(EnumType.STRING)
-	private String orderType;
+	private OrderType orderType;
 
 	private double limitPrice;
 	
 	
 	@ManyToOne
-	@JoinColumn(name = "client_id")
+	@JoinColumn(name = "user_id")
 	private User user;
 	
 	@ManyToOne 

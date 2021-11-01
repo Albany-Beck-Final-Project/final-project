@@ -16,6 +16,18 @@
   font-size: 48px;
 }
 
+.errorMessage {
+  position: absolute;
+  width: 100%;
+  font-size: 28px;
+  line-height: 1;
+  height: 28px;
+
+  color: #FF0000;
+  text-align: center;
+  top: calc(48px + (39.840px * 2) - 10px);
+}
+
 .form {
   width: 100%;
   background-color: inherit;
@@ -36,6 +48,12 @@
   border-bottom: 1px solid #ED6402;
   background-color: #262633;
   box-sizing: border-box;
+}
+
+.input:-webkit-autofill {
+  /* background-color: #262633; */
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #5A6369;
 }
 
 .input:focus {
@@ -59,13 +77,18 @@
   transition: 0.3s;
 }
 
-.submit:hover {
+.submit:disabled {
+  border: 1px solid #FF0000;
+  color: #FF0000;
+}
+
+.submit:hover:enabled {
   cursor: pointer;
   background-color: #333345;
   border: 1px solid #ED6402;
 }
 
-.submit:focus {
+.submit:focus:enabled {
   outline: none;
   background-color: #ED6402;
   color: #333345;

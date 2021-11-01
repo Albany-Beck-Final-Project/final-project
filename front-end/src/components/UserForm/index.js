@@ -1,47 +1,129 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { navigate } from 'gatsby';
 
-import { formDiv, formTitle, form, input, submit } from './userForm.module.css';
+import { formDiv, formTitle, form, input, submit, errorMessage } from './userForm.module.css';
 
 export default (props) => {
 
   const REGEX = /./ig;
+  const API_URL = "http://localhost:8080"
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const signUp = (e) => {
-  //   e.preventDefault();
-    // const body = formatBodyToJSON()
-  //   const options = {
-  //     url: `${API_URL}/register`,
-  //     method: 'POST',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json;charset=UTF-8'
-  //     },
-  //     data: formatBodyToJSON()
-  //   };
-  //   axios(options).then(response => { console.log(response) })
-  // }
-  //
-  // const formatBodyToJSON = () => {
-  //   const body = {
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     email: email,
-  //     password: password,
-  //     confirmPassword: confirmPassword
-  //   }
-  //   return JSON.stringify(body)
-  // }
+  const formatBodyToJSON = () => {
+    return JSON.stringify({
+      firstName: window.btoa(firstName),
+      lastName: window.btoa(lastName),
+      email: window.btoa(email),
+      password: window.btoa(password),
+      confirmPassword: window.btoa(confirmPassword)
+    })
+  }
+
+  const logIn = () => {
+    document.getElementById("logInError").innerHTML = "";
+    fetch(`${API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: formatBodyToJSON()
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "successful") {
+        window.localStorage.setItem("StockPlatform", data.session)
+        navigate("/")
+      }
+    })
+  }
+
+  const signUp = () => {
+    document.getElementById("signUpError").innerHTML = "";
+    if (password !== confirmPassword) {
+      setPassword("")
+      setConfirmPassword("")
+      document.getElementById("signUpError").innerHTML = "Error. Passwords do not match!";
+      window.scrollTo(0,0);
+      return;
+    }
+    fetch(`${API_URL}/users/new`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: formatBodyToJSON()
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "Successfully Registered!") {
+        // setTimeout(() => {
+          navigate("/login");
+        // }, 1000)
+      } else {
+        document.getElementById("signUpError").innerHTML = data.status;
+        window.scrollTo(0,0);
+      }
+    })
+  }
+
+  const generateOptions = (urlPath) => {
+    return {
+      url: `${API_URL}${urlPath}`,
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
+          },
+          data: formatBodyToJSON()
+        }
+    }
+
+    const isFormButtonDisabled = (formType) => {
+      if (formType === 'signup') {
+        if (firstName.length > 0 && lastName.length > 0 && email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
+          // document.getElementById("signUpError").innerHTML = "";
+          return false
+        } else {
+          // document.getElementById("signUpError").innerHTML = "Please fill in all fields!";
+          return true
+        }
+      } else {
+        if (email.length > 0 && password.length > 0) {
+          // document.getElementById("logInError").innerHTML = "";
+          return false
+        } else {
+          // document.getElementById("logInError").innerHTML = "Please fill in all fields!";
+          return true
+        }
+      }
+    }
+
+    const passwordsMatch = () => {
+      if (password === confirmPassword) {
+        return {  }
+      } else {
+        return {
+          borderBottom: "1px solid #FF0000",
+          color: "#FF0000"
+        }
+      }
+    }
 
   if (props.form === "SIGNUP") {
 
     return (
       <div className={formDiv}>
-      <h2 className={formTitle}>Sign Up</h2>
+        <h2 className={formTitle}>Sign Up</h2>
+        <div className={errorMessage} id="signUpError"></div>
           <input
             type="text" name="firstName" className={input}
             onChange={(e) => { setFirstName(e.target.value) }}
@@ -55,7 +137,7 @@ export default (props) => {
             placeholder="Last Name"
           />
           <input
-            type="text" name="email" className={input}
+            type="email" name="email" className={input}
             onChange={(e) => { setEmail(e.target.value) }}
             value={email}
             placeholder="Email"
@@ -66,6 +148,7 @@ export default (props) => {
             onChange={(e) => { setPassword(e.target.value) }}
             value={password.replaceAll(REGEX, "*")}
             placeholder="Password"
+            style={passwordsMatch()}
           />
           <input
             type="password" name="confirmPassword" className={input}
@@ -73,18 +156,20 @@ export default (props) => {
             onChange={(e) => { setConfirmPassword(e.target.value) }}
             value={confirmPassword.replaceAll(REGEX, "*")}
             placeholder="Confirm Password"
+            style={passwordsMatch()}
           />
 
-          <input type="submit" className={submit} onSubmit={(e) => { e.preventDefault(); }} value="Sign Up" />
+          <button className={submit} onClick={(e) => { e.preventDefault(); signUp(); }} disabled={isFormButtonDisabled("signup")}>Sign Up</button>
       </div>
     )
   } else {
     return (
       <div className={formDiv}>
         <h2 className={formTitle}>Log In</h2>
-        <form className={form} action="http://localhost:8080/login" method="post" >
+        <div className={errorMessage} id="logInError"></div>
+        {/*<form className={form}>*/}
         <input
-          type="text" name="username" className={input}
+          type="email" name="email" className={input}
           onChange={(e) => { setEmail(e.target.value) }}
           value={email}
           placeholder="Email"
@@ -97,8 +182,9 @@ export default (props) => {
           placeholder="Password"
         />
 
-          <input type="submit" className={submit} onSubmit={() => {  }} value="Log In" />
-        </form>
+          {/*<input type="submit" className={submit} onSubmit={(e) => { e.preventDefault(); logIn(); navigate("/") }} value="Log In" />
+        </form>*/}
+        <button className={submit} onClick={(e) => { e.preventDefault(); logIn(); }} disabled={isFormButtonDisabled("login")}>Log In</button>
       </div>
     )
   }
