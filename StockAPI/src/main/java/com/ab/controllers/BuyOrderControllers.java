@@ -57,6 +57,14 @@ public class BuyOrderControllers {
 		return buyOrderService.getAllBuyOrders();
 	}
 	
+	@PostMapping("/users/buyorders")
+	public List<BuyOrder> getUserBuyOrders(@RequestBody Map<String, String> userDetails) {
+		if(!(auth.authorizeSession(userDetails))) {
+			return null;
+		}
+		return buyOrderService.getUserBuyOrders(auth.getSession(userDetails));
+	}
+	
 	
 	@PostMapping("/buyorders/{id}")
 	public List<BuyOrder> getBuyOrderById(@RequestBody Map<String, String> userDetails, @PathVariable int orderId) { 

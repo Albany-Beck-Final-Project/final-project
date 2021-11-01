@@ -25,6 +25,7 @@ export default (props) => {
   }
 
   const logIn = () => {
+    document.getElementById("logInError").innerHTML = "";
     fetch(`${API_URL}/users`, {
       method: 'POST',
       headers: {
@@ -37,9 +38,6 @@ export default (props) => {
     .then(response => response.json())
     .then(data => {
       if (data.status === "successful") {
-        // window.localStorage.StockPlatform = {
-          // session: data.session
-        // }
         window.localStorage.setItem("StockPlatform", data.session)
         navigate("/")
       }
@@ -47,6 +45,14 @@ export default (props) => {
   }
 
   const signUp = () => {
+    document.getElementById("signUpError").innerHTML = "";
+    if (password !== confirmPassword) {
+      setPassword("")
+      setConfirmPassword("")
+      document.getElementById("signUpError").innerHTML = "Error. Passwords do not match!";
+      window.scrollTo(0,0);
+      return;
+    }
     fetch(`${API_URL}/users/new`, {
       method: 'POST',
       headers: {
@@ -84,16 +90,30 @@ export default (props) => {
     const isFormButtonDisabled = (formType) => {
       if (formType === 'signup') {
         if (firstName.length > 0 && lastName.length > 0 && email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
+          // document.getElementById("signUpError").innerHTML = "";
           return false
         } else {
+          // document.getElementById("signUpError").innerHTML = "Please fill in all fields!";
           return true
         }
       } else {
         if (email.length > 0 && password.length > 0) {
+          // document.getElementById("logInError").innerHTML = "";
           return false
         } else {
-          console.log("right place!")
+          // document.getElementById("logInError").innerHTML = "Please fill in all fields!";
           return true
+        }
+      }
+    }
+
+    const passwordsMatch = () => {
+      if (password === confirmPassword) {
+        return {  }
+      } else {
+        return {
+          borderBottom: "1px solid #FF0000",
+          color: "#FF0000"
         }
       }
     }
@@ -128,6 +148,7 @@ export default (props) => {
             onChange={(e) => { setPassword(e.target.value) }}
             value={password.replaceAll(REGEX, "*")}
             placeholder="Password"
+            style={passwordsMatch()}
           />
           <input
             type="password" name="confirmPassword" className={input}
@@ -135,6 +156,7 @@ export default (props) => {
             onChange={(e) => { setConfirmPassword(e.target.value) }}
             value={confirmPassword.replaceAll(REGEX, "*")}
             placeholder="Confirm Password"
+            style={passwordsMatch()}
           />
 
           <button className={submit} onClick={(e) => { e.preventDefault(); signUp(); }} disabled={isFormButtonDisabled("signup")}>Sign Up</button>
@@ -144,6 +166,7 @@ export default (props) => {
     return (
       <div className={formDiv}>
         <h2 className={formTitle}>Log In</h2>
+        <div className={errorMessage} id="logInError"></div>
         {/*<form className={form}>*/}
         <input
           type="email" name="email" className={input}

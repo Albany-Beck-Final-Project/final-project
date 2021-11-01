@@ -30,6 +30,10 @@ public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 	@Modifying
 	@Query("UPDATE BuyOrder b SET b.orderType =:type WHERE b.buyOrderId =:id")
 	public int updateOrderTypeByOrderId(@Param("type")String type, @Param("id") int id);
+
+	@Query("SELECT b FROM BuyOrder b WHERE b.user.userId=:userId")
+	public List<BuyOrder> findAllByUserId(int userId);
+
 	
 	
 	
