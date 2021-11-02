@@ -24,5 +24,9 @@ public class SellOrder extends Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sellOrderId;
 
+	public SellOrder(Double price, int shares, LocalDateTime timeOfPurchase, OrderStatus orderStatus, OrderType orderType, double limit,
+			User user, OrderBook orderBook) {
+		super(price, shares, timeOfPurchase, orderStatus, orderType, limit, user, orderBook);
+	}
 
 }

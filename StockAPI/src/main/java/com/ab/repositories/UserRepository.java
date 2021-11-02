@@ -23,6 +23,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query("SELECT u from User u WHERE u.email=:email")
 	Optional<User> getByEmail(String email);
+
  
 	/**
 //	REGISTER

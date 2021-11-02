@@ -17,7 +17,7 @@
 }
 
 
-.userOptions, .homeDiv {
+.userOptions, .homeDiv, .stockDiv {
   height: 50px;
 
   top: 50%;
@@ -34,7 +34,11 @@
   left: 5%;
 }
 
-.logInLink, .signUpLink, .logOut, .accountOptions, .homeLink {
+.stockDiv {
+  left: 15%;
+}
+
+.logInLink, .signUpLink, .logOut, .accountOptions, .homeLink, .stockLink {
   color: #5A6369;
 
   margin-top: 15px;
@@ -44,7 +48,7 @@
   text-decoration: none;
 }
 
-.logInLink, .homeLink {
+.logInLink, .homeLink, .stockLink {
   float: right;
 
 }

@@ -51,4 +51,13 @@ public class Order {
 	@JoinColumn(name = "order_book_id")
 	private OrderBook orderBook;
 
+//	@Override
+//	public String toString() {
+//		return "price=" + price + ", shares=" + shares + ", timeOfPurchase=" + timeOfPurchase + ", orderStatus="
+//				+ orderStatus + ", orderType=" + orderType + ", limitPrice=" + limitPrice + ", user=" + user
+//				+ ", orderBook=" + orderBook + "]";
+//	}
+	
+	
+
 }

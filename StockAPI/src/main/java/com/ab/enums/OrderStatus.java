@@ -2,5 +2,5 @@ package com.ab.enums;
 
 public enum OrderStatus {
 
-	PARTIAL, FULL, NEW
+	PARTIALLY_FILLED, FULLY_FILLED, NEW
 }

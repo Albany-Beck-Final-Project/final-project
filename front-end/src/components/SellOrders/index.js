@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { eachSellOrder, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus, orderDirection, buyMain, headers } from './sellOrders.module.css'
 import { SellService } from '../../services';
 
 
-const SellOrders = () => {
+const SellOrders = ({ orderBook }) => {
+
+  const [orderList, setOrderList] = useState([])
+
+  useEffect(() => {
+    async function getOrders() {
+      setOrderList(await SellService.getOrders(orderBook))
+    }
+
+    getOrders();
+  }, [])
 
   const renderOrders = () => {
     let rendering = [];
-    let orders = SellService.getOrders();
 
-    orders.forEach((order) => {
+    orderList.forEach((order) => {
       rendering.push(
         <li>
           <div className={eachSellOrder}>
-            <div className={orderDirection} style={{ color: "#FF0000" }}><strong>{order.direction}</strong></div>
-            <div className={orderStock}>{order.stock}</div>
+            <div className={orderDirection} style={{ color: "#FF0000" }}><strong>SELL</strong></div>
+            <div className={orderStock}>{order.orderBook.companyName}</div>
             <div className={orderShares}>{order.shares}</div>
-            <div className={orderPrice}>£{order.price}</div>
-            <div className={orderStatus}>{order.status}</div>
+            <div className={orderPrice}>£{order.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+            <div className={orderStatus}>{order.orderStatus}</div>
 
           </div>
         </li>

@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.sellOption input, .sellOption select {
+.sellOption input, .sellOption select, .sellSubmit {
   border: none;
   border-bottom: 1px solid #ED6402;
   background-color: #262633;
@@ -16,7 +16,7 @@
   margin-left: calc(20% / 6);
 }
 
-.sellOption input {
+.sellOption input, .sellSubmit {
   box-sizing: border-box;
   padding-left: 5px;
 }

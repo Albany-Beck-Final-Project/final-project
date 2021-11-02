@@ -1,43 +1,21 @@
 import React from 'react';
-import { Link, navigate } from 'gatsby';
+import { navigate } from 'gatsby';
 
-import { platform, home, homeLink, exchange, exchangeOption, buyOptionButton, sellOptionButton, buyMain, sellMain, historyMain } from '../styles/platform.module.css';
+import PlatformContextProvider from '../contexts/PlatformContext.js';
+import PlatformComponent from '../components/Platform';
 
-import Orders from '../components/Orders';
+
 
 const Platform = () => {
-  // if(!(window.localStorage.StockPlatform)) {
-  //   navigate("/login");
-  // }
-
-
-
-  const renderExchanges = () => {
-    return (null)
+  if(window.localStorage.StockPlatform === undefined) {
+    navigate("/login");
   }
 
+
   return (
-    <div className={platform}>
-      <div className={home}>
-        <Link to="/" className={homeLink}>Home</Link>
-      </div>
-
-      <div className={exchange}>
-        <div className={exchangeOption}>
-
-          <button className={buyOptionButton} onClick={() => { navigate("/platform/buy") }}>BUY</button>
-            { renderExchanges() }
-          <button className={sellOptionButton} onClick={() => { navigate("/platform/sell") }}>SELL</button>
-
-        </div>
-
-        <Orders className={buyMain} direction="BUY" />
-
-        <Orders className={sellMain} direction="SELL" />
-
-      </div>
-      <div className={historyMain}></div>
-    </div>
+    <PlatformContextProvider>
+      <PlatformComponent />
+    </PlatformContextProvider>
   )
 }
 
