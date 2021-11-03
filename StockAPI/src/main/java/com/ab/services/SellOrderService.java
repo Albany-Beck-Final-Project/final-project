@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ab.dtos.UserOrderDto;
+import com.ab.entities.BuyOrder;
 import com.ab.entities.SellOrder;
 import com.ab.entities.SellOrder;
 import com.ab.entities.User;
@@ -37,6 +38,9 @@ public class SellOrderService  {
 	
 	@Autowired
 	private OrderBookRepository orderBookRepo;
+	
+	@Autowired
+	private SmartOrderRouting smartOrderRouting;
 	
 	/**
 	public OrderStatus updateSellOrderStatus(OrderStatus status, int id) { 
@@ -79,6 +83,7 @@ public class SellOrderService  {
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
 			sellOrderRepository.save(marketOrder);
+			smartOrderRouting.match();
 			return marketOrder;
 		case "Limit": 
 //			SellOrder limitOrder = new SellOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Limit", buy.getLimitPrice());
@@ -93,6 +98,7 @@ public class SellOrderService  {
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
 			sellOrderRepository.save(limitOrder);
+			smartOrderRouting.match();
 			return limitOrder;
 		default: 
 //			SellOrder newOrder = new SellOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), buy.getOrderType(), buy.getLimitPrice());
@@ -106,15 +112,29 @@ public class SellOrderService  {
 					userRepo.getByEmail(details.get("userEmail")).get(),
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
-			return sellOrderRepository.save(newOrder);
-//			return newOrder;
+			sellOrderRepository.save(newOrder);
+			smartOrderRouting.match();
+			return newOrder;
 		}
 	}
 
     
-	public int updateOrderStatus(Map<String, String> details, int orderId) { 
-		return sellOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
+//	public int updateOrderStatus(Map<String, String> details, int orderId) { 
+//		return sellOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
 
+//	}
+
+	public List<SellOrder> getAllToMatch() {
+		return sellOrderRepository.getAllToMatch();
+	}
+	
+	public boolean updateStatus(SellOrder sell, String status) {
+		// TODO Auto-generated method stub
+		return sellOrderRepository.updateOrderStatusByOrderId(status, sell.getSellOrderId()) == 1;
+	}
+	
+	public boolean updateAvailable(SellOrder sell, int available) {
+		return sellOrderRepository.updateAvailableByOrderId(available, sell.getSellOrderId()) == 1;
 	}
 		
 }

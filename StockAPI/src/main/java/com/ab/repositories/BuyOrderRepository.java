@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.ab.entities.BuyOrder;
 
 @Repository	
-public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
+public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer> {
 
 	//Basic methods are already included
 	
@@ -34,8 +34,17 @@ public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 	@Query("SELECT b FROM BuyOrder b WHERE b.user.userId=:userId")
 	public List<BuyOrder> findAllByUserId(int userId);
 
-	@Query("SELECT b from BuyOrder b WHERE b.orderBook.companyName=:stock")
+	@Query("SELECT b from BuyOrder b WHERE b.orderBook.companyName=:stock AND b.available > 0")
 	public List<BuyOrder> findAllByStockName(String stock);
+
+	@Query("SELECT b from BuyOrder b WHERE b.orderStatus='NEW' OR b.orderStatus='PARTIALLY_FILLED' ORDER BY b.timeOfPurchase DESC")
+	public List<BuyOrder> getAllToMatch();
+
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE BuyOrder b SET b.available=:available WHERE b.buyOrderId=:buyOrderId")
+	public int updateAvailableByOrderId(int available, int buyOrderId);
 
 	
 	

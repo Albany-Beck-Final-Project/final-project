@@ -22,6 +22,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class TradeHistory {
 	
+	public TradeHistory(BuyOrder buy, SellOrder sell, int quantity) {
+		this.buyOrder = buy;
+		this.sellOrder = sell;
+		this.quantity = quantity;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int tradeID;
@@ -33,6 +40,9 @@ public class TradeHistory {
 	@OneToOne
 	@JoinColumn(name = "buy_order_id")
 	private BuyOrder buyOrder;
+	
+	
+	private int quantity;
 
 	
 }
