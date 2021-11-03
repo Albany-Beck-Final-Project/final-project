@@ -26,7 +26,7 @@ const BuyOrders = ({ orderBook }) => {
           <div className={eachBuyOrder}>
             <div className={orderDirection} style={{ color: "#18C412" }}><strong>BUY</strong></div>
             <div className={orderStock}>{order.orderBook.companyName}</div>
-            <div className={orderShares}>{order.shares}</div>
+            <div className={orderShares}>{order.available}</div>
             <div className={orderPrice}>£{order.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
             <div className={orderStatus}>{order.orderStatus}</div>
 

@@ -34,6 +34,15 @@ public interface SellOrderRepository extends JpaRepository<SellOrder,Integer>{
 	@Query("SELECT s FROM SellOrder s WHERE s.user.userId=:userId")
 	public List<SellOrder> findAllByUserId(int userId);
 
-	@Query("SELECT s FROM SellOrder s WHERE s.orderBook.companyName=:stock")
+	@Query("SELECT s FROM SellOrder s WHERE s.orderBook.companyName=:stock AND s.available > 0")
 	public List<SellOrder> findAllByStockName(String stock);
+	
+//	@Query("SELECT s from SellOrder s WHERE s.status=NEW OR s.status=PARTIALLY_FILLED ORDER BY s.timeOfPurchase DESC")
+	@Query("SELECT s from SellOrder s WHERE s.orderStatus='NEW' OR s.orderStatus='PARTIALLY_FILLED' ORDER BY s.timeOfPurchase DESC")
+	public List<SellOrder> getAllToMatch();
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE SellOrder s SET s.available=:available WHERE s.sellOrderId=:sellOrderId")
+	public int updateAvailableByOrderId(int available, int sellOrderId);
 }

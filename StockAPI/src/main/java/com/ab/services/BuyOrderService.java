@@ -38,6 +38,9 @@ public class BuyOrderService {
 	@Autowired
 	private OrderHelper<BuyOrder> buyHelper;
 	
+	@Autowired
+	private SmartOrderRouting smartOrderRouting;
+	
 	
 	public List<BuyOrder> getAllBuyOrders(Map<String, String> details) { 
 		
@@ -45,10 +48,10 @@ public class BuyOrderService {
 	}
 	
 	
-	public int updateOrderStatus(Map<String, String> details, int orderId) {
-		
-		return buyOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
-	}
+//	public int updateOrderStatus(Map<String, String> details, int orderId) {
+//		
+//		return buyOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
+//	}
 	
 	
 	public BuyOrder deleteBuyOrder(int id) {
@@ -58,8 +61,7 @@ public class BuyOrderService {
 	}
 	
 	//Developed create method 
-	public BuyOrder createBuyOrder(Map<String, String> details) { 
-		System.out.println(details);
+	public BuyOrder createBuyOrder(Map<String, String> details) {
 		String orderType = details.get("type");
 		switch(orderType) { 
 		case "Market":
@@ -74,6 +76,7 @@ public class BuyOrderService {
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
 			buyOrderRepository.save(marketOrder);
+			smartOrderRouting.match();
 			return marketOrder;
 		case "Limit": 
 //			BuyOrder limitOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Limit", buy.getLimitPrice());
@@ -88,6 +91,7 @@ public class BuyOrderService {
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
 			buyOrderRepository.save(limitOrder);
+			smartOrderRouting.match();
 			return limitOrder;
 		default: 
 //			BuyOrder newOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), buy.getOrderType(), buy.getLimitPrice());
@@ -102,6 +106,9 @@ public class BuyOrderService {
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
 			buyOrderRepository.save(newOrder);
+			System.out.println("Service before trigger");
+			smartOrderRouting.match();
+			System.out.println("Service after trigger");
 			return newOrder;
 		}
 	}
@@ -135,6 +142,21 @@ public class BuyOrderService {
 		List<BuyOrder> orders = buyOrderRepository.findAllByUserId(user.getUserId());
 		return orders.size() > 0 ? buyHelper.convertOrderToDto(orders) : new ArrayList<UserOrderDto>();
 
+	}
+
+
+	public List<BuyOrder> getAllToMatch() {
+		return buyOrderRepository.getAllToMatch();
+	}
+
+
+	public boolean updateStatus(BuyOrder buy, String status) {
+		return buyOrderRepository.updateOrderStatusByOrderId(status, buy.getBuyOrderId()) == 1;
+	}
+
+
+	public boolean updateAvailable(BuyOrder buy, int available) {
+		return buyOrderRepository.updateAvailableByOrderId(available, buy.getBuyOrderId()) == 1;
 	}
 	
 }

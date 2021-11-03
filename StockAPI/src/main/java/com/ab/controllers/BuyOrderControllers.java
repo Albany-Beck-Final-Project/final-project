@@ -44,6 +44,7 @@ public class BuyOrderControllers {
 			return null;
 		}
 		details.put("userEmail", auth.getEmailFromSession(details.get("session")));
+		System.out.println("controller  before service");
 		return buyOrderService.createBuyOrder(details);
 	}
 	//Old new buy order
@@ -58,14 +59,14 @@ public class BuyOrderControllers {
 //		return buyOrderService.saveNewOrder(details);
 //	}
 	
-	@PostMapping("/buyorders/update/{id}")
-	public Integer updateOrderStatus(@RequestBody Map<String, String> details, @PathVariable int orderId) { 
-//		TODO: status and id from details
-		if(!(auth.authorizeSession(details))) {
-			return null;
-		}
-		return buyOrderService.updateOrderStatus(details, orderId);
-	}
+//	@PostMapping("/buyorders/update/{id}")
+//	public Integer updateOrderStatus(@RequestBody Map<String, String> details, @PathVariable int orderId) { 
+////		TODO: status and id from details
+//		if(!(auth.authorizeSession(details))) {
+//			return null;
+//		}
+//		return buyOrderService.updateOrderStatus(details, orderId);
+//	}
 	
 	@PostMapping("/buyorders")
 	public List<BuyOrder> getAllBuyOrders(@RequestBody Map<String, String> details) {
