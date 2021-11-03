@@ -24,6 +24,14 @@ public class BuyOrder extends Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int buyOrderId;
 	
+	public BuyOrder(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType) { 
+		super(price, shares, timeOfPurchase, orderStatus, orderType);
+	}
+	
+	public BuyOrder(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType, double limitPrice) { 
+		super(price, shares, timeOfPurchase, orderStatus, orderType, limitPrice);
+	}
+	
 	public int getBuyOrderId() {
 		return buyOrderId;
 	}

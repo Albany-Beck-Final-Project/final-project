@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ab.authorization.Authorization;
 import com.ab.dtos.UserOrderDto;
 import com.ab.entities.BuyOrder;
+
 import com.ab.entities.SellOrder;
 import com.ab.enums.OrderStatus;
 import com.ab.services.SellOrderService;
@@ -37,17 +41,12 @@ public class SellOrderController {
 		return sellOrderService.saveNewOrder(details);
 	}
 
-	/**
-	public OrderStatus updateStatus(OrderStatus status, int id) {
-		
-		return sellOrderService.updateBuyOrderStatus(status, id);
-	}
-	**/
 	public SellOrder deleteOrder(int id) { 
 		
 		return sellOrderService.deleteSellOrder(id);
 	}	
 	
+
 	@PostMapping("/users/sellorders")
 	public List<UserOrderDto> getUserSellOrders(@RequestBody Map<String, String> userDetails) {
 		if(!(auth.authorizeSession(userDetails))) {
@@ -63,5 +62,14 @@ public class SellOrderController {
 			return null;
 		}
 		return sellOrderService.getAllSellOrders(details);
+
+    
+	@PostMapping("/sellorders/update/{id}")
+	public Integer updateOrderStatus(@RequestBody Map<String, String> details, @PathVariable int orderId) {
+		if(!(auth.authorizeSession(details))) { 
+			return null;
+		}
+		return sellOrderService.updateOrderStatus(details, orderId);
+
 	}
 }

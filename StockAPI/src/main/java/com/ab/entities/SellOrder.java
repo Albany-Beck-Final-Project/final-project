@@ -23,6 +23,11 @@ public class SellOrder extends Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sellOrderId;
+	
+	public int getSellOrderId() {
+		return sellOrderId;
+	}
+
 
 	public SellOrder(Double price, int shares, LocalDateTime timeOfPurchase, OrderStatus orderStatus, OrderType orderType, double limit,
 			User user, OrderBook orderBook) {
