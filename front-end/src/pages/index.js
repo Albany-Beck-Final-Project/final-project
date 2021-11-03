@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
       (async function getUserOrders() {
         const ordered = await OrderService.getAllUserOrders();
-        setOrderList([...ordered])
+        setOrderList(ordered)
 
       })();
 

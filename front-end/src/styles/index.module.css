@@ -67,6 +67,7 @@
 .orders {
   width: 45%;
   min-height: 100px;
+  max-height: 68vh;
   color: #748087;
 
   margin-top: 5%;
