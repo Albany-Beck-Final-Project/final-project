@@ -57,6 +57,26 @@ public class BuyOrderService {
 		return orderToDelete;
 	}
 	
+	//Developed create method 
+	public BuyOrder createBuyOrder(Map<String, String> details,BuyOrder buy) { 
+		String orderType = new String();
+		switch(orderType) { 
+		case "Market":
+			BuyOrder marketOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Market");
+			buyOrderRepository.save(marketOrder);
+			return marketOrder;
+		case "Limit": 
+			BuyOrder limitOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Limit", buy.getLimitPrice());
+			buyOrderRepository.save(limitOrder);
+			return limitOrder;
+		default: 
+			BuyOrder newOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), buy.getOrderType(), buy.getLimitPrice());
+			buyOrderRepository.save(newOrder);
+			return newOrder;
+		}
+	}
+	
+	
 	//Saves the new order to the database.
 	public BuyOrder saveNewOrder(Map<String, String> details) {
 //		TODO: map data to BuyOrder then save in database
@@ -74,7 +94,7 @@ public class BuyOrderService {
 		return buyOrderRepository.save(b);
 	}
 	
-	public List<BuyOrder> findBuyOrderById(int id){
+	public BuyOrder findBuyOrderById(int id){
 		
 		return buyOrderRepository.findBuyOrderById(id);
 	}

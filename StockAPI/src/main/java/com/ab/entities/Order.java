@@ -34,14 +34,15 @@ public class Order {
 	
 	private LocalDateTime timeOfPurchase;
 	
-	@Enumerated(EnumType.STRING)
-	private OrderStatus orderStatus;	
+//	@Enumerated(EnumType.STRING)
+	private String orderStatus;	
 	
-	@Enumerated(EnumType.STRING)
-	private OrderType orderType;
+//	@Enumerated(EnumType.STRING)
+	private String orderType;
 
 	private double limitPrice;
 	
+	private int available;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -51,13 +52,26 @@ public class Order {
 	@JoinColumn(name = "order_book_id")
 	private OrderBook orderBook;
 
-//	@Override
-//	public String toString() {
-//		return "price=" + price + ", shares=" + shares + ", timeOfPurchase=" + timeOfPurchase + ", orderStatus="
-//				+ orderStatus + ", orderType=" + orderType + ", limitPrice=" + limitPrice + ", user=" + user
-//				+ ", orderBook=" + orderBook + "]";
-//	}
 	
+	public Order(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType) { 
+		this.price = price;
+		this.shares = shares; 
+		this.timeOfPurchase = timeOfPurchase;
+		this.orderStatus = orderStatus;
+		this.orderType = orderType;
+		//only when creating a new order
+		this.available = shares;
+	}
 	
+	public Order(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType, double limitPrice) { 
+		this.price = price;
+		this.shares = shares; 
+		this.timeOfPurchase = timeOfPurchase;
+		this.orderStatus = orderStatus;
+		this.orderType = orderType;
+		this.limitPrice = limitPrice;
+		//only when creating a new orders
+		this.available = shares;
+	}
 
 }

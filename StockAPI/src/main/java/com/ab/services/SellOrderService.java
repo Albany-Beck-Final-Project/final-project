@@ -56,7 +56,6 @@ public class SellOrderService  {
 		return orderToDelete;
 	}
 	
-	
 	public List<UserOrderDto> getUserSellOrders(String session) {
 		User user = sessionRepo.getBySessionId(session).getUser();
 		List<SellOrder> orders = sellOrderRepository.findAllByUserId(user.getUserId());
@@ -79,6 +78,11 @@ public class SellOrderService  {
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
 		return sellOrderRepository.save(b);
+
+    
+	public int updateOrderStatus(Map<String, String> details, int orderId) { 
+		return sellOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
+
 	}
 	
 
