@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ab.dtos.UserOrderDto;
-import com.ab.entities.BuyOrder;
+import com.ab.entities.SellOrder;
 import com.ab.entities.SellOrder;
 import com.ab.entities.User;
 import com.ab.enums.OrderStatus;
@@ -39,7 +39,7 @@ public class SellOrderService  {
 	private OrderBookRepository orderBookRepo;
 	
 	/**
-	public OrderStatus updateBuyOrderStatus(OrderStatus status, int id) { 
+	public OrderStatus updateSellOrderStatus(OrderStatus status, int id) { 
 		return sellOrderRepository.updateOrderStatusSell(status, id);
 	}
 	 * @param details 
@@ -64,27 +64,57 @@ public class SellOrderService  {
 	}
 	
 	
-	public SellOrder saveNewOrder(Map<String, String> details) {
-//		TODO: map data to BuyOrder then save in database
-		System.out.println(orderBookRepo.getByCompanyName(details.get("companyName")));
-		SellOrder b = new SellOrder(
+	public SellOrder createSellOrder(Map<String, String> details) { 
+		String orderType = new String();
+		switch(orderType) { 
+		case "Market":
+//			SellOrder marketOrder = new SellOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Market");
+			SellOrder marketOrder = new SellOrder(
 					Double.parseDouble(details.get("price")),
 					Integer.parseInt(details.get("quantity")),
 					LocalDateTime.now(),
-					OrderStatus.NEW,
-					OrderType.MARKET,
+					"NEW",
+					"MARKET",
+					userRepo.getByEmail(details.get("userEmail")).get(),
+					orderBookRepo.getByCompanyName(details.get("companyName"))
+				);
+			sellOrderRepository.save(marketOrder);
+			return marketOrder;
+		case "Limit": 
+//			SellOrder limitOrder = new SellOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Limit", buy.getLimitPrice());
+			SellOrder limitOrder = new SellOrder(
+					Double.parseDouble(details.get("price")),
+					Integer.parseInt(details.get("quantity")),
+					LocalDateTime.now(),
+					"NEW",
+					"LIMIT",
 					0.0,
 					userRepo.getByEmail(details.get("userEmail")).get(),
 					orderBookRepo.getByCompanyName(details.get("companyName"))
 				);
-		return sellOrderRepository.save(b);
+			sellOrderRepository.save(limitOrder);
+			return limitOrder;
+		default: 
+//			SellOrder newOrder = new SellOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), buy.getOrderType(), buy.getLimitPrice());
+			SellOrder newOrder = new SellOrder(
+					Double.parseDouble(details.get("price")),
+					Integer.parseInt(details.get("quantity")),
+					LocalDateTime.now(),
+					"NEW",
+					"NONE",
+					0.0,
+					userRepo.getByEmail(details.get("userEmail")).get(),
+					orderBookRepo.getByCompanyName(details.get("companyName"))
+				);
+			return sellOrderRepository.save(newOrder);
+//			return newOrder;
+		}
+	}
 
     
 	public int updateOrderStatus(Map<String, String> details, int orderId) { 
 		return sellOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
 
 	}
-	
-
-	
+		
 }

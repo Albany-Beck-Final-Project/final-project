@@ -39,23 +39,24 @@ public class BuyOrderControllers {
 	
 	//Specific create buy order method 
 	@PostMapping("/buyorders/new")
-	public BuyOrder storeOrder(@RequestBody Map<String, String> details, BuyOrder b) { 
+	public BuyOrder storeOrder(@RequestBody Map<String, String> details) { 
 		if(!(auth.authorizeSession(details))) { 
 			return null;
 		}
-		return buyOrderService.createBuyOrder(details, b);
+		details.put("userEmail", auth.getEmailFromSession(details.get("session")));
+		return buyOrderService.createBuyOrder(details);
 	}
 	//Old new buy order
-	@PostMapping("/old/buyorders/new")
-	public BuyOrder storeNewOrder(@RequestBody Map<String, String> details) {
-		System.out.println("Arrived");
-		if(!(auth.authorizeSession(details))) {
-			return null;
-		}
-		details.put("userEmail", auth.getEmailFromSession(details.get("session")));
-		System.out.println("added userEmail");
-		return buyOrderService.saveNewOrder(details);
-	}
+//	@PostMapping("/old/buyorders/new")
+//	public BuyOrder storeNewOrder(@RequestBody Map<String, String> details) {
+//		System.out.println("Arrived");
+//		if(!(auth.authorizeSession(details))) {
+//			return null;
+//		}
+//		details.put("userEmail", auth.getEmailFromSession(details.get("session")));
+//		System.out.println("added userEmail");
+//		return buyOrderService.saveNewOrder(details);
+//	}
 	
 	@PostMapping("/buyorders/update/{id}")
 	public Integer updateOrderStatus(@RequestBody Map<String, String> details, @PathVariable int orderId) { 

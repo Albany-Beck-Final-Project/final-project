@@ -37,8 +37,7 @@ public class SellOrderController {
 			return null;
 		}
 		details.put("userEmail", auth.getEmailFromSession(details.get("session")));
-		System.out.println("added userEmail");
-		return sellOrderService.saveNewOrder(details);
+		return sellOrderService.createSellOrder(details);
 	}
 
 	public SellOrder deleteOrder(int id) { 
@@ -62,6 +61,7 @@ public class SellOrderController {
 			return null;
 		}
 		return sellOrderService.getAllSellOrders(details);
+	}
 
     
 	@PostMapping("/sellorders/update/{id}")

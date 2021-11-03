@@ -10,7 +10,7 @@ export default (props) => {
 
   const [buyQuantity, setBuyQuantity] = useState(null);
   const [sorStrategy, setSorStrategy] = useState(null);
-  const [orderPriceType, setOrderPriceType] = useState("Market Price");
+  const [orderPriceType, setOrderPriceType] = useState("Market");
   const [orderPrice, setOrderPrice] = useState(null);
   const [orderBook, setOrderBook] = useState(props.location.state.currentBook)
 
@@ -66,7 +66,7 @@ export default (props) => {
           </select>
 
           <select name="orderPriceType">
-            <option value="Market Price" selected disabled>Market Price</option>
+            <option value="Market" selected disabled>Market Price</option>
           </select>
 
           <input type="number" onChange={(e) => { setOrderPrice(e.target.value) }} value={orderPrice} className={buyPriceInput} style={{ display: _checkIfPriceAllowed() ? "block" : "none" }} placeholder="£/share" />

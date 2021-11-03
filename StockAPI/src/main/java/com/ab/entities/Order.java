@@ -63,7 +63,8 @@ public class Order {
 		this.available = shares;
 	}
 	
-	public Order(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType, double limitPrice) { 
+	public Order(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType, double limitPrice,
+			User user, OrderBook orderBook) { 
 		this.price = price;
 		this.shares = shares; 
 		this.timeOfPurchase = timeOfPurchase;
@@ -72,6 +73,24 @@ public class Order {
 		this.limitPrice = limitPrice;
 		//only when creating a new orders
 		this.available = shares;
+		this.user = user;
+		this.orderBook = orderBook;
 	}
+
+	public Order(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType,
+			User user, OrderBook orderBook) {
+		// TODO Auto-generated constructor stub
+		this.price = price;
+		this.shares = shares; 
+		this.timeOfPurchase = timeOfPurchase;
+		this.orderStatus = orderStatus;
+		this.orderType = orderType;
+		//only when creating a new orders
+		this.available = shares;
+		this.user = user;
+		this.orderBook = orderBook;
+	}
+
+
 
 }

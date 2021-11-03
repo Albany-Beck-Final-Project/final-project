@@ -24,12 +24,21 @@ public class SellOrder extends Order {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sellOrderId;
 	
+	public SellOrder(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType,
+			User user, OrderBook orderBook) { 
+		super(price, shares, timeOfPurchase, orderStatus, orderType, user, orderBook);
+	}
+	
+	public SellOrder(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType, double limitPrice,
+			User user, OrderBook orderBook) { 
+		super(price, shares, timeOfPurchase, orderStatus, orderType, limitPrice, user, orderBook);
+	}
+	
 	public int getSellOrderId() {
 		return sellOrderId;
 	}
 
-
-	public SellOrder(Double price, int shares, LocalDateTime timeOfPurchase, OrderStatus orderStatus, OrderType orderType, double limit,
+	public SellOrder(Double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType, double limit,
 			User user, OrderBook orderBook) {
 		super(price, shares, timeOfPurchase, orderStatus, orderType, limit, user, orderBook);
 	}

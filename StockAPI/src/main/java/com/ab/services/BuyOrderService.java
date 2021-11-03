@@ -58,19 +58,49 @@ public class BuyOrderService {
 	}
 	
 	//Developed create method 
-	public BuyOrder createBuyOrder(Map<String, String> details,BuyOrder buy) { 
-		String orderType = new String();
+	public BuyOrder createBuyOrder(Map<String, String> details) { 
+		System.out.println(details);
+		String orderType = details.get("type");
 		switch(orderType) { 
 		case "Market":
-			BuyOrder marketOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Market");
+//			BuyOrder marketOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Market");
+			BuyOrder marketOrder = new BuyOrder(
+					Double.parseDouble(details.get("price")),
+					Integer.parseInt(details.get("quantity")),
+					LocalDateTime.now(),
+					"NEW",
+					"MARKET",
+					userRepo.getByEmail(details.get("userEmail")).get(),
+					orderBookRepo.getByCompanyName(details.get("companyName"))
+				);
 			buyOrderRepository.save(marketOrder);
 			return marketOrder;
 		case "Limit": 
-			BuyOrder limitOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Limit", buy.getLimitPrice());
+//			BuyOrder limitOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), "Limit", buy.getLimitPrice());
+			BuyOrder limitOrder = new BuyOrder(
+					Double.parseDouble(details.get("price")),
+					Integer.parseInt(details.get("quantity")),
+					LocalDateTime.now(),
+					"NEW",
+					"LIMIT",
+					0.0,
+					userRepo.getByEmail(details.get("userEmail")).get(),
+					orderBookRepo.getByCompanyName(details.get("companyName"))
+				);
 			buyOrderRepository.save(limitOrder);
 			return limitOrder;
 		default: 
-			BuyOrder newOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), buy.getOrderType(), buy.getLimitPrice());
+//			BuyOrder newOrder = new BuyOrder(buy.getPrice(), buy.getShares(), LocalDateTime.now(), buy.getOrderStatus(), buy.getOrderType(), buy.getLimitPrice());
+			BuyOrder newOrder = new BuyOrder(
+					Double.parseDouble(details.get("price")),
+					Integer.parseInt(details.get("quantity")),
+					LocalDateTime.now(),
+					"NEW",
+					"NONE",
+					0.0,
+					userRepo.getByEmail(details.get("userEmail")).get(),
+					orderBookRepo.getByCompanyName(details.get("companyName"))
+				);
 			buyOrderRepository.save(newOrder);
 			return newOrder;
 		}
@@ -78,22 +108,22 @@ public class BuyOrderService {
 	
 	
 	//Saves the new order to the database.
-	public BuyOrder saveNewOrder(Map<String, String> details) {
-//		TODO: map data to BuyOrder then save in database
-		System.out.println(orderBookRepo.getByCompanyName(details.get("companyName")));
-		BuyOrder b = new BuyOrder(
-					Double.parseDouble(details.get("price")),
-					Integer.parseInt(details.get("quantity")),
-					LocalDateTime.now(),
-					OrderStatus.NEW,
-					OrderType.MARKET,
-					0.0,
-					userRepo.getByEmail(details.get("userEmail")).get(),
-					orderBookRepo.getByCompanyName(details.get("companyName"))
-				);
-		return buyOrderRepository.save(b);
-	}
-	
+//	public BuyOrder saveNewOrder(Map<String, String> details) {
+////		TODO: map data to BuyOrder then save in database
+//		System.out.println(orderBookRepo.getByCompanyName(details.get("companyName")));
+//		BuyOrder b = new BuyOrder(
+//					Double.parseDouble(details.get("price")),
+//					Integer.parseInt(details.get("quantity")),
+//					LocalDateTime.now(),
+//					"NEW",
+//					"MARKET",
+//					0.0,
+//					userRepo.getByEmail(details.get("userEmail")).get(),
+//					orderBookRepo.getByCompanyName(details.get("companyName"))
+//				);
+//		return buyOrderRepository.save(b);
+//	}
+//	
 	public BuyOrder findBuyOrderById(int id){
 		
 		return buyOrderRepository.findBuyOrderById(id);

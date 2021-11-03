@@ -18,6 +18,6 @@ public class UserOrderDto {
 	private String stockName;
 	private int shares;
 	private double price;
-	private OrderStatus orderStatus;
+	private String orderStatus;
 	private String orderDirection;
 }
