@@ -1,6 +1,7 @@
 package com.ab.services;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ public class SellOrderService  {
 		SellOrder orderToDelete = sellOrderRepository.getById(id);
 		sellOrderRepository.deleteById(id);
 		return orderToDelete;
+	}
+	
+	public int updateOrderStatus(Map<String, String> details, int orderId) { 
+		
+		return sellOrderRepository.updateOrderStatusByOrderId(details.get("status"), orderId);
 	}
 	
 

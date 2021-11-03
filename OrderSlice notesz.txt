@@ -5,3 +5,23 @@ Order Slicing
 
 When a user executes a buy or sell order call the sort order to filter through the buy order to see if theres a 
 match in a sell order. This is ordered by date. 
+
+Best match input price per share 
+
+Best match Buy order with the lowest sell.
+
+When creating Orders:
+-> Make a switch case to apply the different type of orders
+-> Include the different type of orders and research to know which one has what?
+
+Different types: 
+
+-> Market Order ( no price limit) 
+
+-> Limit Order (price limit) 
+
+-> Hidden Limit (price limit is hidden)
+
+
+LocallDateTime.now(); //gets the current time
+

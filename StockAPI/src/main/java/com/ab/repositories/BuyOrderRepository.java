@@ -18,7 +18,7 @@ public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 	//Basic methods are already included
 	
 	@Query("SELECT b from BuyOrder b WHERE b.buyOrderId=:id")
-	public List<BuyOrder> findBuyOrderById(@Param("id") int id);
+	public BuyOrder findBuyOrderById(@Param("id") int id);
 	
 	@Transactional 
 	@Modifying

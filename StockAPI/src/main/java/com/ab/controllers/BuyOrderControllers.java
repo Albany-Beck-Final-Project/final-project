@@ -32,7 +32,16 @@ public class BuyOrderControllers {
 		return buyOrderService.deleteBuyOrder(id);
 	}
 	
+	//Specific create buy order method 
 	@PostMapping("/buyorders/new")
+	public BuyOrder storeOrder(@RequestBody Map<String, String> details, BuyOrder b) { 
+		if(!(auth.authorizeSession(details))) { 
+			return null;
+		}
+		return buyOrderService.createBuyOrder(details, b);
+	}
+	//Old new buy order
+	@PostMapping("/old/buyorders/new")
 	public BuyOrder storeNewOrder(@RequestBody Map<String, String> details) {
 		if(!(auth.authorizeSession(details))) {
 			return null;
@@ -67,7 +76,7 @@ public class BuyOrderControllers {
 	
 	
 	@PostMapping("/buyorders/{id}")
-	public List<BuyOrder> getBuyOrderById(@RequestBody Map<String, String> userDetails, @PathVariable int orderId) { 
+	public BuyOrder getBuyOrderById(@RequestBody Map<String, String> userDetails, @PathVariable int orderId) { 
 		if(!(auth.authorizeSession(userDetails))) {
 			return null;
 		}
