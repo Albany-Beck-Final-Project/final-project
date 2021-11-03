@@ -34,6 +34,9 @@ public interface BuyOrderRepository extends JpaRepository<BuyOrder,Integer>{
 	@Query("SELECT b FROM BuyOrder b WHERE b.user.userId=:userId")
 	public List<BuyOrder> findAllByUserId(int userId);
 
+	@Query("SELECT b from BuyOrder b WHERE b.orderBook.companyName=:stock")
+	public List<BuyOrder> findAllByStockName(String stock);
+
 	
 	
 	

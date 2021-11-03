@@ -51,6 +51,7 @@ public class Order {
 	@ManyToOne 
 	@JoinColumn(name = "order_book_id")
 	private OrderBook orderBook;
+
 	
 	public Order(double price, int shares, LocalDateTime timeOfPurchase, String orderStatus, String orderType) { 
 		this.price = price;
@@ -72,5 +73,5 @@ public class Order {
 		//only when creating a new orders
 		this.available = shares;
 	}
-	
+
 }

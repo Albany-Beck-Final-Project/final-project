@@ -1,5 +1,7 @@
 package com.ab.repositories;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.ab.entities.BuyOrder;
 import com.ab.entities.SellOrder;
 import com.ab.enums.OrderStatus;
 
@@ -27,4 +30,10 @@ public interface SellOrderRepository extends JpaRepository<SellOrder,Integer>{
 	public OrderStatus updateOrderStatusSell(@Param("orderStatus")OrderStatus orderStatus, @Param("id")int id);
 	
 	**/
+	
+	@Query("SELECT s FROM SellOrder s WHERE s.user.userId=:userId")
+	public List<SellOrder> findAllByUserId(int userId);
+
+	@Query("SELECT s FROM SellOrder s WHERE s.orderBook.companyName=:stock")
+	public List<SellOrder> findAllByStockName(String stock);
 }

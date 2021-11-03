@@ -1,2 +1,5 @@
 export { SellService } from './SellService.module'
 export { BuyService } from './BuyService.module'
+export { OrderService } from './OrderService.module'
+export { OrderBookService } from './OrderBookService.module'
+export { ExchangeService } from './ExchangeService.module'

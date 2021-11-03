@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/global.css";
 
 import Nav from '../components/Nav';
-import { SellService, BuyService } from '../services';
+import { SellService, BuyService, OrderService } from '../services';
 import { main, photoDiv, about, portfolio, orders, orderId, orderDate, orderStock, orderShares, orderPrice, orderStatus,
   orderDirection } from '../styles/index.module.css';
 
@@ -17,17 +17,16 @@ export default function Home() {
   }
   const [orderList, setOrderList] = useState([]);
 
-  useEffect(async () => {
-    setOrderList(
-      // const testOrders = 
-      await BuyService.getUserOrders()
-    )
-    // console.log(testOrders);
+  useEffect(() => {
+      (async function getUserOrders() {
+        const ordered = await OrderService.getAllUserOrders();
+        setOrderList([...ordered])
+
+      })();
+
   }, [])
 
-  const renderBuyOrders = () => {
 
-  }
 
   const renderOrders = () => {
     let jsx = [];
@@ -38,13 +37,12 @@ export default function Home() {
       jsx.push(
         <li>
           <div className={eachOrderMain}>
-              <div className={orderId}>{order.orderId}</div>
-              <div className={orderDate}>{order.timeOfPurchase}</div>
-              <div className={orderStock}>{order.orderBook.orderBookId}</div>
+              <div className={orderDate}>{order.timeOfPurchase.toUpperCase()}</div>
+              <div className={orderStock}>{order.stockName}</div>
               <div className={orderShares}>{order.shares}</div>
-              <div className={orderPrice}>£{order.price}</div>
+              <div className={orderPrice}>£{order.price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
               <div className={orderStatus}>{order.orderStatus}</div>
-              {/*<div className={orderDirection}>{orderDirection}</div>*/}
+              <div className={orderDirection}>{order.orderDirection}</div>
           </div>
         </li>
       )
@@ -52,8 +50,12 @@ export default function Home() {
     return jsx;
   }
 
+  const whiteSpaceForId = (orderId) => {
+    console.log(4 - orderId.toString().length)
+    return "\u00A0".repeat(4 - orderId.toString().length)
+  }
+
   const getOrders = () => {
-    // ITERATE
     let jsx = [];
     jsx.push(renderOrders(orderList))
     return jsx;
@@ -72,6 +74,7 @@ export default function Home() {
   }
 
   if (window.localStorage.StockPlatform !== undefined) {
+
     return (
       <div>
         <Nav path="/"/>
@@ -95,7 +98,6 @@ export default function Home() {
             <ul>
               <li>
                 <div className={orderTitle}>
-                  <div className={orderId}><u>Id</u></div>
                   <div className={orderDate}><u>Date</u></div>
                   <div className={orderStock}><u>Stock</u></div>
                   <div className={orderShares}><u>Shares</u></div>
@@ -105,15 +107,6 @@ export default function Home() {
                 </div>
               </li>
               <li>
-                <div className={eachOrderMain}>
-                    <div className={orderId}>1013</div>
-                    <div className={orderDate}>14 OCT 2021</div>
-                    <div className={orderStock}>AAPL</div>
-                    <div className={orderShares}>4</div>
-                    <div className={orderPrice}>£592.48</div>
-                    <div className={orderStatus}>FILLED</div>
-                    <div className={orderDirection}>BUY</div>
-                </div>
               </li>
               { renderOrders() }
             </ul>

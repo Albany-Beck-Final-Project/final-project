@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,6 +45,7 @@ public class Exchange {
 			mappedBy = "orderBookID",
 			cascade = CascadeType.ALL)
 	@Getter
+	@JsonIgnore
 	private List<OrderBook> orderBooks;
 	
 

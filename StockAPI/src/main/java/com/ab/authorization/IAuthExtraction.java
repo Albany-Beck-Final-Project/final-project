@@ -10,5 +10,9 @@ public interface IAuthExtraction {
 	
 	public String getSession(Map<String, String> userDetails);
 	
+	public String getSession(String session);
+	
 	public Map<String, String> decodeValues(Map<String, String> userDetails);
+
+	
 }

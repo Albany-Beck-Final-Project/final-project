@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, navigate } from 'gatsby';
 
-import { navDiv, nav, homeDiv, homeLink, userOptions, logInLink, signUpLink, logOut, dropdown, accountOptions, dropdownMenu, menuItems, itemLinks, lastItem, active } from './nav.module.css';
+import { navDiv, nav, homeDiv, homeLink, stockDiv, stockLink, userOptions, logInLink, signUpLink, logOut, dropdown, accountOptions, dropdownMenu, menuItems, itemLinks, lastItem, active } from './nav.module.css';
 
 export default (props) => {
 
@@ -81,6 +81,9 @@ export default (props) => {
       <div className={nav}>
           <div className={homeDiv}>
             <Link to="/" className={homeLink}>Home</Link>
+          </div>
+          <div className={stockDiv}>
+            <Link to={ window.localStorage.StockPlatform !== undefined ? "/platform" : "/login" } className={stockLink}>Stocks</Link>
           </div>
           { userOptionsRendering() }
 

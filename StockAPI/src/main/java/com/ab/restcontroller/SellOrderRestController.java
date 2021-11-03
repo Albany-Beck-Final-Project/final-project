@@ -15,8 +15,8 @@ public class SellOrderRestController {
 	@Autowired
 	private SellOrderService sellOrderService;
 	
-	@GetMapping("/sellorders")
-	public List<SellOrder> getOrders() { 
-		return sellOrderService.getAllSellOrders();
-	}
+//	@GetMapping("/sellorders")
+//	public List<SellOrder> getOrders() { 
+//		return sellOrderService.getAllSellOrders();
+//	}
 }

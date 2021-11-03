@@ -4,17 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ab.authorization.Authorization;
+import com.ab.dtos.UserOrderDto;
+import com.ab.entities.BuyOrder;
+
 import com.ab.entities.SellOrder;
 import com.ab.enums.OrderStatus;
 import com.ab.services.SellOrderService;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:6030")
 public class SellOrderController {
 
 	@Autowired
@@ -22,11 +29,16 @@ public class SellOrderController {
 	
 	@Autowired
 	private Authorization auth;
-	
 
-	public List<SellOrder> getAllOrders() {
-		
-		return sellOrderService.getAllSellOrders();
+	@PostMapping("/sellorders/new")
+	public SellOrder storeNewOrder(@RequestBody Map<String, String> details) {
+		System.out.println("Arrived");
+		if(!(auth.authorizeSession(details))) {
+			return null;
+		}
+		details.put("userEmail", auth.getEmailFromSession(details.get("session")));
+		System.out.println("added userEmail");
+		return sellOrderService.saveNewOrder(details);
 	}
 
 	public SellOrder deleteOrder(int id) { 
@@ -34,11 +46,30 @@ public class SellOrderController {
 		return sellOrderService.deleteSellOrder(id);
 	}	
 	
+
+	@PostMapping("/users/sellorders")
+	public List<UserOrderDto> getUserSellOrders(@RequestBody Map<String, String> userDetails) {
+		if(!(auth.authorizeSession(userDetails))) {
+			return null;
+		}
+		return sellOrderService.getUserSellOrders(auth.getSession(userDetails));
+		
+	}
+	
+	@PostMapping("/sellorders")
+	public List<SellOrder> getAllSellOrders(@RequestBody Map<String, String> details) {
+		if(!(auth.authorizeSession(details))) {
+			return null;
+		}
+		return sellOrderService.getAllSellOrders(details);
+
+    
 	@PostMapping("/sellorders/update/{id}")
 	public Integer updateOrderStatus(@RequestBody Map<String, String> details, @PathVariable int orderId) {
 		if(!(auth.authorizeSession(details))) { 
 			return null;
 		}
 		return sellOrderService.updateOrderStatus(details, orderId);
+
 	}
 }

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,14 +44,14 @@ public class OrderBook {
 	@OneToMany(
 				mappedBy = "orderBook",
 		cascade = CascadeType.ALL)
-	
+	@JsonIgnore
 	private List<SellOrder> sellOrders;
 	
 
 	@OneToMany(
 				mappedBy = "orderBook",
 		cascade = CascadeType.ALL)
-	
+	@JsonIgnore
 	private List<BuyOrder> buyOrders;
 
 

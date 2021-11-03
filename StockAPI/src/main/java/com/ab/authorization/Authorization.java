@@ -70,6 +70,11 @@ public class Authorization implements IAuthorization, IAuthExtraction {
 	}
 	
 	@Override
+	public String getSession(String session) {
+		return new String(_decodeValues(session));
+	}
+	
+	@Override
 	public Map<String, String> decodeValues(Map<String, String> userDetails) {
 		Map<String, String> newDetails = new HashMap<>();
 		userDetails.forEach((key, value) -> {
@@ -86,5 +91,10 @@ public class Authorization implements IAuthorization, IAuthExtraction {
 	
 	private byte[] _decodeValues(String value) {
 		return Base64.getDecoder().decode(value);
+	}
+
+
+	public String getEmailFromSession(String session) {
+		return sessionRepo.getUserBySessionId(getSession(session)).get().getEmail();
 	}
 }
